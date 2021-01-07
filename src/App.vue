@@ -70,26 +70,28 @@
         <v-btn color="primary" elevation="0"
           >Estadisticas <v-icon class="mx-2">mdi-finance</v-icon></v-btn
         >
-        <v-btn color="primary" elevation="0"
-          >Nuevo Anuncio <v-icon class="mx-2">mdi-plus-circle</v-icon>
+
+        <NuevoAnuncio />
+
+        <v-btn class="mx-2" fab small color="yellow">
+          <v-icon color="black"> mdi-cart </v-icon>
         </v-btn>
       </div>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
-
+import NuevoAnuncio from "./components/NuevoAnuncio";
 export default {
   name: "App",
 
   components: {
-    HelloWorld,
+    NuevoAnuncio,
   },
 
   data: () => ({
