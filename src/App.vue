@@ -35,12 +35,8 @@
           </v-list-item-icon>
           <v-list-item-title>Estadisticas</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
-          <v-list-item-icon>
-            <v-icon>mdi-plus-circle</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Nuevo anuncio</v-list-item-title>
-        </v-list-item>
+        <NuevoAnuncio />
+        
       </v-list>
     </v-navigation-drawer>
 
@@ -99,3 +95,6 @@ export default {
   }),
 };
 </script>
+<style lang="stylus">
+
+</style>
