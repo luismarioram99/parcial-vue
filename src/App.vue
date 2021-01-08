@@ -55,11 +55,11 @@
       <v-spacer></v-spacer>
 
       <v-app-bar-nav-icon
-        class="hidden-sm-and-up"
+        class="hidden-md-and-up"
         @click="drawer = true"
       ></v-app-bar-nav-icon>
 
-      <div class="hidden-xs-only">
+      <div class="hidden-sm-and-down">
         <v-btn color="primary" elevation="0" to="/" active-class="lighten-1">
           Inicio <v-icon class="mx-2">mdi-home</v-icon></v-btn
         >

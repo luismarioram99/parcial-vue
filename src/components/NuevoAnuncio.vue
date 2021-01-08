@@ -6,6 +6,7 @@
   <v-dialog
     v-model="dialog"
     fullscreen
+    scrollable
     hide-overlay
     transition="dialog-bottom-transition"
   >
@@ -21,32 +22,35 @@
       </v-btn>
     </template>
     <v-card>
-      <v-toolbar dark color="primary">
+      <v-card-title class="px-0 py-0">
+              <v-toolbar dark color="primary">
         <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Crear un nuevo anuncio</v-toolbar-title>
+        <v-toolbar-title>Crear <span class="hidden-sm-and-down">un nuevo anuncio</span></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items>
+        <v-toolbar-items class="">
           <v-btn dark color="secondary" text @click="limpiar()">
             <v-icon class="mr-2"> mdi-broom </v-icon>
-            Limpiar
+            <span class="hidden-sm-and-down"> Limpiar </span>
           </v-btn>
           <v-btn dark color="green" text @click="guardar()">
             <v-icon class="mr-2"> mdi-content-save </v-icon>
-            Guardar
+            <span class="hidden-sm-and-down">Guardar </span>
           </v-btn>
           <v-btn dark color="red" text @click="dialog = false">
             <v-icon class="mr-2">mdi-delete</v-icon>
-            Cancelar
+            <span class="hidden-sm-and-down">Cancelar</span>
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
-
+      </v-card-title>
+      <v-card-text class="px-0 py-0" text-color="primary">
+        
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-container>
           <v-row>
-            <v-col sm="6" class="px-10 py-10 text-center">
+            <v-col md="6" cols="12" class="px-10 py-10 text-center">
               <h2>Información del producto</h2>
               <!-- <p>{{nuevoAnuncio}}</p> -->
               <hr />
@@ -75,7 +79,7 @@
                 :rules="rules.modelo"
               ></v-text-field>
               <v-row>
-                <v-col sm="6">
+                <v-col md="6" cols="12">
                   <v-text-field
                     v-model="nuevoAnuncio.tamano"
                     type="number"
@@ -83,11 +87,11 @@
                     min="1"
                     suffix="Pulg"
                     :rules="rules.tamano"
-                    label="Tamaño de pantalla"
+                    label="Pantalla"
                   >
                   </v-text-field>
                 </v-col>
-                <v-col sm="6">
+                <v-col md="6" cols="12">
                   <v-text-field
                     v-model="nuevoAnuncio.ram"
                     type="number"
@@ -111,7 +115,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="6" class="px-10 py-10 text-center">
+            <v-col md="6" cols="12" class="px-10 py-10 text-center">
               <h2>Información del anuncio</h2>
               <hr />
               <v-text-field
@@ -185,15 +189,21 @@
                 :rules="rules.condiciones"
                 label="He leido y acepto los terminos y condiciones"
               >
-              <template v-slot:label>
-                He leido y acepto los <router-link active-class="link" class="mx-2" to="/terms">terminos y condiciones</router-link>
-              </template>
+                <template v-slot:label>
+                  <p class="my-0">He leido y acepto los <router-link class="d-inline-block" active-class="link" to="/terms">terminos y condiciones</router-link></p>                  
+                </template>
               </v-switch>
             </v-col>
           </v-row>
-          
         </v-container>
       </v-form>
+      </v-card-text>
+      <!-- <v-card-actions>
+        <v-btn color="blue darken-1" text @click="dialog = false">
+          Close
+        </v-btn>
+        <v-btn color="blue darken-1" text @click="dialog = false"> Save </v-btn>
+      </v-card-actions> -->
     </v-card>
   </v-dialog>
 </template>
@@ -204,7 +214,7 @@ export default {
   data() {
     return {
       acceptedTerms: false,
-      dialog: true,
+      dialog: false,
       valid: true,
       maxModel: 10,
       maxTitulo: 20,
@@ -280,9 +290,10 @@ export default {
             "Telefono no debe exceder los 8 caracteres",
           (v) => /\d{8}/.test(v) || "El telefono debe ser de la forma ########",
         ],
-        condiciones:[
-          () => this.acceptedTerms || "Debe aceptar los terminos y condiciones."
-        ]
+        condiciones: [
+          () =>
+            this.acceptedTerms || "Debe aceptar los terminos y condiciones.",
+        ],
       },
     };
   },
@@ -300,4 +311,11 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+  color: black;
+}
+hr {
+  border-color: #aaa;
+  border-bottom: 0;
+}
 </style>
