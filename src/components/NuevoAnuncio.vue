@@ -328,7 +328,7 @@ export default {
         tamano: [
           (v) => !!v || "Este campo es requerido",
           (v) => (v && v > 0) || "El tamaño debe ser mayor a 0",
-          (v) => (v && v <= 0) || "El tamañó debe ser menor o igual a 20",
+          (v) => (v && v <= 20) || "El tamañó debe ser menor o igual a 20",
         ],
         ram: [
           (v) => !!v || "Este campo es requerido",
@@ -504,6 +504,8 @@ export default {
 
       this.uploadProgress = 0;
       this.subiendo = false;
+
+      this.$ref.form.reset();
 
       this.dialog = false;
     },
