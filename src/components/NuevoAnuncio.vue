@@ -23,180 +23,251 @@
     </template>
     <v-card>
       <v-card-title class="px-0 py-0">
-              <v-toolbar dark color="primary">
-        <v-btn icon dark @click="dialog = false">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-        <v-toolbar-title>Crear <span class="hidden-sm-and-down">un nuevo anuncio</span></v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-toolbar-items class="">
-          <v-btn dark color="secondary" text @click="limpiar()">
-            <v-icon class="mr-2"> mdi-broom </v-icon>
-            <span class="hidden-sm-and-down"> Limpiar </span>
+        <v-toolbar dark color="primary">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-btn dark color="green" text @click="guardar()">
-            <v-icon class="mr-2"> mdi-content-save </v-icon>
-            <span class="hidden-sm-and-down">Guardar </span>
-          </v-btn>
-          <v-btn dark color="red" text @click="dialog = false">
-            <v-icon class="mr-2">mdi-delete</v-icon>
-            <span class="hidden-sm-and-down">Cancelar</span>
-          </v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
+          <v-toolbar-title
+            >Crear
+            <span class="hidden-sm-and-down"
+              >un nuevo anuncio</span
+            ></v-toolbar-title
+          >
+          <v-spacer></v-spacer>
+          <v-toolbar-items class="">
+            <v-btn dark color="secondary" text @click="limpiar()">
+              <v-icon class="mr-2"> mdi-broom </v-icon>
+              <span class="hidden-sm-and-down"> Limpiar </span>
+            </v-btn>
+            <v-btn dark color="green" text @click="guardar()">
+              <v-icon class="mr-2"> mdi-content-save </v-icon>
+              <span class="hidden-sm-and-down">Guardar </span>
+            </v-btn>
+            <v-btn dark color="red" text @click="dialog = false">
+              <v-icon class="mr-2">mdi-delete</v-icon>
+              <span class="hidden-sm-and-down">Cancelar</span>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
       </v-card-title>
       <v-card-text class="px-0 py-0" text-color="primary">
-        
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-container>
-          <v-row>
-            <v-col md="6" cols="12" class="px-10 py-10 text-center">
-              <h2>Información del producto</h2>
-              <!-- <p>{{nuevoAnuncio}}</p> -->
-              <hr />
-              <v-select
-                :items="estados"
-                v-model="nuevoAnuncio.estado"
-                :rules="rules.selection"
-                label="Estado del telefono"
-              ></v-select>
-              <v-select
-                :items="marcas"
-                :rules="rules.selection"
-                v-model="nuevoAnuncio.marca"
-                label="Marca"
-              ></v-select>
-              <v-select
-                :items="sistemas"
-                :rules="rules.selection"
-                v-model="nuevoAnuncio.sistema"
-                label="Sistema Operativo"
-              ></v-select>
-              <v-text-field
-                v-model="nuevoAnuncio.modelo"
-                label="Modelo del teléfono"
-                :counter="maxModel"
-                :rules="rules.modelo"
-              ></v-text-field>
-              <v-row>
-                <v-col md="6" cols="12">
-                  <v-text-field
-                    v-model="nuevoAnuncio.tamano"
-                    type="number"
-                    max="20"
-                    min="1"
-                    suffix="Pulg"
-                    :rules="rules.tamano"
-                    label="Pantalla"
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-container>
+            <v-row>
+              <v-col md="6" cols="12" class="px-10 py-10 text-center">
+                <h2>Información del teléfono</h2>
+                <!-- <p>{{nuevoAnuncio}}</p> -->
+                <hr />
+                <v-select
+                  :items="estados"
+                  v-model="nuevoAnuncio.estado"
+                  :rules="rules.selection"
+                  label="Estado del telefono"
+                ></v-select>
+                <v-select
+                  :items="marcas"
+                  :rules="rules.selection"
+                  v-model="nuevoAnuncio.marca"
+                  label="Marca"
+                ></v-select>
+                <v-select
+                  :items="sistemas"
+                  :rules="rules.selection"
+                  v-model="nuevoAnuncio.sistema"
+                  label="Sistema Operativo"
+                ></v-select>
+                <v-text-field
+                  v-model="nuevoAnuncio.modelo"
+                  label="Modelo del teléfono"
+                  :counter="maxModel"
+                  :rules="rules.modelo"
+                ></v-text-field>
+                <v-row>
+                  <v-col md="6" cols="12">
+                    <v-text-field
+                      v-model="nuevoAnuncio.tamano"
+                      type="number"
+                      max="20"
+                      min="1"
+                      suffix="Pulg"
+                      :rules="rules.tamano"
+                      label="Pantalla"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <v-col md="6" cols="12">
+                    <v-text-field
+                      v-model="nuevoAnuncio.ram"
+                      type="number"
+                      max="128"
+                      min="1"
+                      suffix="GB"
+                      label="RAM"
+                      :rules="rules.ram"
+                    >
+                    </v-text-field>
+                  </v-col>
+                </v-row>
+                <v-text-field
+                  v-model="nuevoAnuncio.almacenamiento"
+                  type="number"
+                  max="1024"
+                  min="1"
+                  suffix="GB"
+                  label="Almacenamiento Interno"
+                  :rules="rules.almacenamiento"
+                >
+                </v-text-field>
+
+                <h2 class="mt-5">Galería de imágenes</h2>
+                <hr />
+                <div class="d-flex align-items-center pt-9">
+                  <v-file-input
+                    class="py-0 pr-4"
+                    counter
+                    accept="image/*"
+                    :rules="rules.imagenes"
+                    chips
+                    prepend-icon="mdi-camera"
+                    v-model="imagen"
+                    label="Subir imágenes"
+                    show-size
+                    truncate-length="20"
+                  ></v-file-input>
+                  <v-btn
+                    color="primary"
+                    :disabled="!imagen || subiendo"
+                    @click="subirImagen()"
                   >
-                  </v-text-field>
-                </v-col>
-                <v-col md="6" cols="12">
-                  <v-text-field
-                    v-model="nuevoAnuncio.ram"
-                    type="number"
-                    max="128"
-                    min="1"
-                    suffix="GB"
-                    label="RAM"
-                    :rules="rules.ram"
+                    <v-progress-circular
+                      indeterminate
+                      class="m-3"
+                      v-if="subiendo"
+                    >
+                    </v-progress-circular>
+                    <v-icon v-if="!subiendo" class="mr-2">mdi-upload</v-icon>
+                    Subir
+                  </v-btn>
+                </div>
+                <v-progress-linear
+                  v-if="subiendo"
+                  :value="uploadProgress"
+                  class="mt-5"
+                ></v-progress-linear>
+                <v-carousel
+                  v-if="subidas.length"
+                  :show-arrows="subidas.length > 1"
+                  class="mt-5"
+                >
+                  <v-carousel-item
+                    v-for="(item, ref) in subidas"
+                    :key="ref"
+                    :src="item.url"
                   >
-                  </v-text-field>
-                </v-col>
-              </v-row>
-              <v-text-field
-                v-model="nuevoAnuncio.almacenamiento"
-                type="number"
-                max="1024"
-                min="1"
-                suffix="GB"
-                label="Almacenamiento Interno"
-                :rules="rules.almacenamiento"
-              >
-              </v-text-field>
-            </v-col>
-            <v-col md="6" cols="12" class="px-10 py-10 text-center">
-              <h2>Información del anuncio</h2>
-              <hr />
-              <v-text-field
-                label="Titulo"
-                :rules="rules.titulo"
-                v-model="nuevoAnuncio.titulo"
-                :counter="maxTitulo"
-              >
-              </v-text-field>
-              <v-textarea
-                label="Descripcion"
-                v-model="nuevoAnuncio.desc"
-                :counter="maxDesc"
-                :rules="rules.desc"
-              >
-              </v-textarea>
+                    <v-btn
+                      class="delete-btn"
+                      color="red"
+                      dark
+                      bottom
+                      left
+                      elevation="2"
+                      fab
+                      @click="borrarImagen(item.ref)"
+                      ><v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </v-carousel-item>
+                </v-carousel>
+              </v-col>
+              <v-col md="6" cols="12" class="px-10 py-10 text-center">
+                <h2>Información del anuncio</h2>
+                <hr />
+                <v-text-field
+                  label="Titulo"
+                  :rules="rules.titulo"
+                  v-model="nuevoAnuncio.titulo"
+                  :counter="maxTitulo"
+                >
+                </v-text-field>
+                <v-textarea
+                  label="Descripcion"
+                  v-model="nuevoAnuncio.desc"
+                  :counter="maxDesc"
+                  :rules="rules.desc"
+                >
+                </v-textarea>
 
-              <v-text-field
-                label="precio"
-                prefix="$"
-                v-model="nuevoAnuncio.precio"
-                type="number"
-                :rules="rules.precio"
-                min="0"
-              >
-              </v-text-field>
+                <v-text-field
+                  label="precio"
+                  prefix="$"
+                  v-model="nuevoAnuncio.precio"
+                  type="number"
+                  :rules="rules.precio"
+                  min="0"
+                >
+                </v-text-field>
 
-              <h2 class="mt-5">Información de contacto</h2>
-              <hr />
+                <h2 class="mt-5">Información de contacto</h2>
+                <hr />
 
-              <v-row>
-                <v-col sm="6">
-                  <v-text-field
-                    label="Nombre"
-                    v-model="nuevoAnuncio.nombre"
-                    :counter="maxNombre"
-                    :rules="rules.nombre"
-                  >
-                  </v-text-field>
-                </v-col>
-                <v-col sm="6">
-                  <v-text-field
-                    label="Apellido"
-                    v-model="nuevoAnuncio.apellido"
-                    :counter="maxNombre"
-                    :rules="rules.nombre"
-                  >
-                  </v-text-field>
-                </v-col>
-              </v-row>
+                <v-row>
+                  <v-col sm="6">
+                    <v-text-field
+                      label="Nombre"
+                      v-model="nuevoAnuncio.nombre"
+                      :counter="maxNombre"
+                      :rules="rules.nombre"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <v-col sm="6">
+                    <v-text-field
+                      label="Apellido"
+                      v-model="nuevoAnuncio.apellido"
+                      :counter="maxNombre"
+                      :rules="rules.nombre"
+                    >
+                    </v-text-field>
+                  </v-col>
+                </v-row>
 
-              <v-text-field
-                label="Correo Electronico"
-                v-model="nuevoAnuncio.email"
-                :counter="maxEmail"
-                :rules="rules.email"
-              >
-              </v-text-field>
+                <v-text-field
+                  label="Correo Electronico"
+                  v-model="nuevoAnuncio.email"
+                  :counter="maxEmail"
+                  :rules="rules.email"
+                >
+                </v-text-field>
 
-              <v-text-field
-                label="Numero telefónico"
-                prefix="+503"
-                placeholder="00000000"
-                :counter="maxTel"
-                :rules="rules.telefono"
-              >
-              </v-text-field>
-              <v-switch
-                v-model="acceptedTerms"
-                color="green"
-                :rules="rules.condiciones"
-                label="He leido y acepto los terminos y condiciones"
-              >
-                <template v-slot:label>
-                  <p class="my-0">He leido y acepto los <router-link class="d-inline-block" active-class="link" to="/terms">terminos y condiciones</router-link></p>                  
-                </template>
-              </v-switch>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
+                <v-text-field
+                  label="Numero telefónico"
+                  prefix="+503"
+                  placeholder="00000000"
+                  :counter="maxTel"
+                  :rules="rules.telefono"
+                >
+                </v-text-field>
+                <v-switch
+                  v-model="acceptedTerms"
+                  color="green"
+                  :rules="rules.condiciones"
+                  label="He leido y acepto los terminos y condiciones"
+                >
+                  <template v-slot:label>
+                    <p class="my-0">
+                      He leido y acepto los
+                      <router-link
+                        class="d-inline-block"
+                        active-class="link"
+                        to="/terms"
+                        >terminos y condiciones</router-link
+                      >
+                    </p>
+                  </template>
+                </v-switch>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
       </v-card-text>
       <!-- <v-card-actions>
         <v-btn color="blue darken-1" text @click="dialog = false">
@@ -209,6 +280,8 @@
 </template>
 
 <script>
+import { storage } from "../firebase";
+import { db } from "../firebase";
 export default {
   name: "NuevoAnuncio",
   data() {
@@ -220,7 +293,21 @@ export default {
       maxTitulo: 20,
       maxDesc: 500,
       maxNombre: 20,
+
       maxEmail: 50,
+
+      uploadProgress: 0,
+      imageDir: "",
+      subiendo: false,
+      imagen: null,
+
+      subidasHeaders: [
+        { text: "Nombre", value: "name" },
+        { text: "Estado", value: "estado" },
+        { text: "progreso", value: "progreso" },
+      ],
+      subidas: [],
+
       maxTel: 8,
       marcas: ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo"],
       estados: [
@@ -294,23 +381,142 @@ export default {
           () =>
             this.acceptedTerms || "Debe aceptar los terminos y condiciones.",
         ],
+        imagenes: [
+          () =>
+            !!this.subidas.length ||
+            this.imagen ||
+            "Debe subir al menos una imagen",
+        ],
       },
     };
   },
   methods: {
+    makeid(length) {
+      var result = "";
+      var characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
+    },
+    borrarImagen(ref) {
+      var storageRef = storage.ref();
+
+      var index = this.subidas.findIndex(function (value) {
+        if (value.ref == ref) return true;
+      });
+
+      console.log(index, this.subidas);
+      var context = this;
+      storageRef
+        .child(ref)
+        .delete()
+        .then(function () {
+          context.subidas.splice(index, 1);
+        });
+    },
+    async subirImagen() {
+      var storageRef = storage.ref();
+
+      if (this.imagen) {
+        this.subiendo = true;
+
+        if (this.imageDir == "") {
+          var dir = "";
+          var is_unique = false;
+          var listRef = null;
+
+          while (!is_unique) {
+            dir = this.makeid(10);
+            listRef = storageRef.child(dir);
+
+            await listRef.listAll().then(function (res) {
+              if (res.items.length == 0) {
+                is_unique = true;
+              }
+            });
+          }
+
+          this.imageDir = dir;
+        }
+
+        var imgRef = storageRef.child(this.imageDir + "/" + this.imagen.name);
+        var status = imgRef.put(this.imagen);
+
+        var context = this;
+
+        status.on(
+          "state_changed",
+          function (snapshot) {
+            context.uploadProgress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(context.uploadProgress);
+          },
+          function () {},
+          function () {
+            status.snapshot.ref.getDownloadURL().then(function (_url) {
+              context.subidas.push({
+                url: _url,
+                ref: context.imageDir + "/" + context.imagen.name,
+              });
+              context.imagen = null;
+              context.subiendo = false;
+            });
+          }
+        );
+      }
+    },
     limpiar() {
       this.$refs.form.reset();
     },
     guardar() {
+      this.nuevoAnuncio.imagenes = this.subidas;
+
       if (this.$refs.form.validate()) {
+        db.collection("anuncios").add(this.nuevoAnuncio);
+
+        var storageRef = storage.ref();
+        for (var i = 0; i < this.subidas.length; i++) {
+          storageRef.child(this.subidas[i].ref).delete();
+        }
+
+        this.subidas = [];
+        this.imagen = null;
+
+        this.uploadProgress = 0;
+        this.subiendo = false;
+
         this.dialog = false;
       }
+    },
+    cancelar() {
+      var storageRef = storage.ref();
+      for (var i = 0; i < this.subidas.length; i++) {
+        storageRef.child(this.subidas[i].ref).delete();
+      }
+
+      this.subidas = [];
+      this.imagen = null;
+
+      this.uploadProgress = 0;
+      this.subiendo = false;
+
+      this.dialog = false;
     },
   },
 };
 </script>
 
 <style scoped>
+.delete-btn {
+  position: absolute;
+  bottom: 60px;
+  right: 15px;
+}
 h2 {
   color: black;
 }
