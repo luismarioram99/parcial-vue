@@ -2,33 +2,85 @@
   <div class="home">
     <v-container fluid>
       <v-row>
-        <v-col cols="12" md="3" class="hidden-sm-and-down"> </v-col>
+        <v-col cols="12" md="3" class="hidden-sm-and-down px-5 pt-6">
+          <div class="d-flex flex-row justify-center align-center">
+            <v-icon class="my-3">mdi-filter</v-icon>
+            <h2>Filtros</h2>
+          </div><div class="my-3">
+            <h3>Estado</h3>
+            <div
+              class="px-0 py-0 mx-0 my-0"
+              v-for="estado in estados"
+              :key="estado"
+            >
+              <v-checkbox
+                v-model="estadoSelect"
+                class="py-0 my-0"
+                hide-details
+                :label="estado"
+                :value="estado"
+              >
+              </v-checkbox>
+            </div>
+          </div>
+          <div class="my-3">
+            <h3>Marcas</h3>
+            <div
+              class="px-0 py-0 mx-0 my-0"
+              v-for="marca in marcas"
+              :key="marca"
+            >
+              <v-checkbox
+                v-model="marcaSelect"
+                class="py-0 my-0"
+                hide-details
+                :label="marca"
+                :value="marca"
+              >
+              </v-checkbox>
+            </div>
+          </div>
+          <div class="my-3">
+            <h3>Sistema Operativo</h3>
+            <div
+              class="px-0 py-0 mx-0 my-0"
+              v-for="sistema in sistemas"
+              :key="sistema"
+            >
+              <v-checkbox
+                v-model="sistemaSelect"
+                class="py-0 my-0"
+                hide-details
+                :label="sistema"
+                :value="sistema"
+              >
+              </v-checkbox>
+            </div>
+          </div>
+        </v-col>
         <v-col cols="12" md="9">
-         
           <v-row v-if="!anuncios.length">
             <v-col cols="12">
-              <v-skeleton-loader
-              class="mt-5 mb-5"
-                type="table-heading"
-              >
+              <v-skeleton-loader class="mt-5 mb-5" type="table-heading">
               </v-skeleton-loader>
             </v-col>
-            <v-col  v-for="index in 6" :key="index" cols="12" sm="6" md="4">
+            <v-col v-for="index in 6" :key="index" cols="12" sm="6" md="4">
               <v-skeleton-loader
                 type="card-avatar, article, actions"
               ></v-skeleton-loader>
             </v-col>
           </v-row>
           <v-data-iterator
+            no-data-text="Ningún telefono con esa descripción."
             v-if="anuncios.length"
-            :items="anuncios"
+            :items="anunciosFiltrado"
             :search="busqueda"
-            :sort-by="ordenar"
-            items-per-page="5"
+            :sort-by="ordenar.param"
+            :items-per-page="10"
             :sort-desc="sortDesc"
           >
             <template v-slot:header>
-              <v-toolbar class="mb-5 mt-5">
+              <v-toolbar class="mb-5 mt-5" elevation="0">
                 <v-text-field
                   v-model="busqueda"
                   clearable
@@ -47,7 +99,6 @@
                     hide-details
                     :items="params"
                     item-text="texto"
-                    item-value="param"
                     prepend-inner-icon="mdi-magnify"
                     label="Ordenar por"
                   ></v-select>
@@ -179,6 +230,18 @@ export default {
       busqueda: "",
       ordenar: {},
       sortDesc: true,
+      marcas: ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo"],
+      estados: [
+        "Sellado",
+        "Nuevo",
+        "En excelente estado",
+        "En buen estado",
+        "Usado",
+      ],
+      sistemas: ["IOS", "Android", "Windows", "Lineage OS"],
+      marcaSelect: [],
+      estadoSelect: [],
+      sistemaSelect: [],
       params: [
         { texto: "Titulo", param: "titulo" },
         { texto: "Precio", param: "precio" },
@@ -188,6 +251,37 @@ export default {
       anuncios: [],
       imageDicc: {},
     };
+  },
+  computed: {
+    marcasFiltrado() {
+      if (this.marcaSelect.length) return this.marcaSelect;
+      else return this.marcas;
+    },
+    estadosFiltrado() {
+      if (this.estadoSelect.length) return this.estadoSelect;
+      else return this.estados;
+    },
+    sistemasFiltrado() {
+      if (this.sistemaSelect.length) return this.sistemaSelect;
+      else return this.sistemas;
+    },
+    anunciosFiltrado(){
+
+      return this.anuncios.filter(v => {
+
+        if(!this.marcasFiltrado.includes(v.marca))
+          return false;
+        
+        if(!this.estadosFiltrado.includes(v.estado))
+          return false;
+        
+        if(!this.sistemasFiltrado.includes(v.sistema))
+          return false;
+        
+        return true;
+      });
+  
+    }
   },
   firestore: {
     anuncios: db.collection("anuncios"),

@@ -67,11 +67,10 @@
         >
 
         <NuevoAnuncio />
-
-        <v-btn class="mx-2" fab small color="yellow">
-          <v-icon color="black"> mdi-cart </v-icon>
-        </v-btn>
       </div>
+      <v-btn class="mx-2" fab small color="yellow">
+        <v-icon color="black"> mdi-cart </v-icon>
+      </v-btn>
     </v-app-bar>
 
     <v-main>
@@ -82,7 +81,12 @@
       {{ snackText }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn :color="snackColor" text v-bind="attrs" @click="snackbar = false">
+        <v-btn
+          :color="snackColor"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
           Cerrar
         </v-btn>
       </template>
@@ -104,15 +108,15 @@ export default {
     snackbar: false,
     timeout: 2000,
     snackText: "Prueba",
-    snackColor: "green"
+    snackColor: "green",
   }),
-  mounted(){
-    this.$root.$on('snackbar-message', (snackText, snackColor) =>{
+  mounted() {
+    this.$root.$on("snackbar-message", (snackText, snackColor) => {
       this.snackText = snackText;
       this.snackColor = snackColor;
       this.snackbar = true;
     });
-  }
+  },
 };
 </script>
 <style lang="stylus"></style>
