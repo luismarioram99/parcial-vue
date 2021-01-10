@@ -1,8 +1,15 @@
 <template>
-  <!-- <div class="px-0 py-0 mx-0 my-0"> -->
-  <!-- <v-btn color="primary" dark @click.stop="dialog = true">
-      Open Dialog
-    </v-btn> -->
+  
+  <div class="transparent">
+  <v-snackbar v-model="snackbar" :timeout="timeout">
+    {{snacktext}}
+
+    <template v-slot:action="{ attrs }">
+      <v-btn color="green" text v-bind="attrs" @click="snackbar = false">
+        Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
   <v-dialog
     v-model="dialog"
     fullscreen
@@ -43,7 +50,7 @@
               <v-icon class="mr-2"> mdi-content-save </v-icon>
               <span class="hidden-sm-and-down">Guardar </span>
             </v-btn>
-            <v-btn dark color="red" text @click="dialog = false">
+            <v-btn dark color="red" text @click="cancelar()">
               <v-icon class="mr-2">mdi-delete</v-icon>
               <span class="hidden-sm-and-down">Cancelar</span>
             </v-btn>
@@ -277,6 +284,7 @@
       </v-card-actions> -->
     </v-card>
   </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -290,6 +298,9 @@ export default {
       dialog: false,
       valid: true,
       maxModel: 10,
+      snackbar: false,
+      snacktext: "El anuncio ha sido creado correctamente",
+      timeout: 2000,
       maxTitulo: 20,
       maxDesc: 500,
       maxNombre: 20,
@@ -472,6 +483,10 @@ export default {
     },
     limpiar() {
       this.$refs.form.reset();
+      var storageRef = storage.ref();
+      for (var i = 0; i < this.subidas.length; i++) {
+          storageRef.child(this.subidas[i].ref).delete();
+      }
     },
     guardar() {
       this.nuevoAnuncio.imagenes = this.subidas;
@@ -479,21 +494,21 @@ export default {
       if (this.$refs.form.validate()) {
         db.collection("anuncios").add(this.nuevoAnuncio);
 
-        var storageRef = storage.ref();
-        for (var i = 0; i < this.subidas.length; i++) {
-          storageRef.child(this.subidas[i].ref).delete();
-        }
+        this.$refs.form.reset();
 
         this.subidas = [];
         this.imagen = null;
+        this.imageDir = "";
 
         this.uploadProgress = 0;
         this.subiendo = false;
 
         this.dialog = false;
+        this.snackbar = true;
       }
     },
     cancelar() {
+      
       var storageRef = storage.ref();
       for (var i = 0; i < this.subidas.length; i++) {
         storageRef.child(this.subidas[i].ref).delete();
@@ -501,11 +516,12 @@ export default {
 
       this.subidas = [];
       this.imagen = null;
+      this.imageDir = "";
 
       this.uploadProgress = 0;
       this.subiendo = false;
 
-      this.$ref.form.reset();
+      this.$refs.form.reset();
 
       this.dialog = false;
     },
@@ -525,5 +541,10 @@ h2 {
 hr {
   border-color: #aaa;
   border-bottom: 0;
+}
+.transparent{
+  padding: 0;
+  margin: 0;
+  display: inline-block;
 }
 </style>
