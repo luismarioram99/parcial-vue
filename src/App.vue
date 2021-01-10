@@ -36,7 +36,6 @@
           <v-list-item-title>Estadisticas</v-list-item-title>
         </v-list-item>
         <NuevoAnuncio />
-        
       </v-list>
     </v-navigation-drawer>
 
@@ -78,6 +77,16 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+
+    <v-snackbar v-model="snackbar" :timeout="timeout">
+      {{ snackText }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn :color="snackColor" text v-bind="attrs" @click="snackbar = false">
+          Cerrar
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -92,9 +101,18 @@ export default {
 
   data: () => ({
     drawer: false,
+    snackbar: false,
+    timeout: 2000,
+    snackText: "Prueba",
+    snackColor: "green"
   }),
+  mounted(){
+    this.$root.$on('snackbar-message', (snackText, snackColor) =>{
+      this.snackText = snackText;
+      this.snackColor = snackColor;
+      this.snackbar = true;
+    });
+  }
 };
 </script>
-<style lang="stylus">
-
-</style>
+<style lang="stylus"></style>

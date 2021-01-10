@@ -1,15 +1,7 @@
 <template>
   
   <div class="transparent">
-  <v-snackbar v-model="snackbar" :timeout="timeout">
-    {{snacktext}}
-
-    <template v-slot:action="{ attrs }">
-      <v-btn color="green" text v-bind="attrs" @click="snackbar = false">
-        Cerrar
-      </v-btn>
-    </template>
-  </v-snackbar>
+  
   <v-dialog
     v-model="dialog"
     fullscreen
@@ -298,9 +290,7 @@ export default {
       dialog: false,
       valid: true,
       maxModel: 10,
-      snackbar: false,
       snacktext: "El anuncio ha sido creado correctamente",
-      timeout: 2000,
       maxTitulo: 20,
       maxDesc: 500,
       maxNombre: 20,
@@ -504,7 +494,9 @@ export default {
         this.subiendo = false;
 
         this.dialog = false;
-        this.snackbar = true;
+        
+        this.$root.$emit('snackbar-message', this.snacktext, "green");
+
       }
     },
     cancelar() {
@@ -547,4 +539,5 @@ hr {
   margin: 0;
   display: inline-block;
 }
+
 </style>
