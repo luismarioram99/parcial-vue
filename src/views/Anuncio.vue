@@ -1,7 +1,7 @@
 <template>
   <div class="anuncio">
     <v-container v-if="loaded">
-      <v-card elevation="8" class="mt-5">
+      <v-card elevation="8" class="my-5">
         <v-row>
           <v-col cols="12" md="6">
             <v-carousel class="mx-5 my-5">
@@ -46,7 +46,7 @@
                 {{ anuncio.desc }}
               </p>
 
-              <v-expansion-panels >
+              <v-expansion-panels class="elevation-10">
                 <v-expansion-panel>
                   <v-expansion-panel-header>
                     <v-row align="center" class="spacer" no-gutters>
@@ -64,12 +64,58 @@
                     </v-row>
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
-                    <h4> Contacto </h4>
-                    {{anuncio.email}} <br>
-                    {{anuncio.telefono}}
+                    <h4>Información de contacto</h4>
+                    {{ anuncio.email }} <br />
+                    {{ anuncio.telefono }}
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
+
+              <v-treeview
+                class="mt-5"
+                :items="telefonoTree"
+                open-on-click
+                shaped
+                dense
+                hoverable
+                color="warning"
+              >
+                <template v-slot:prepend="{ item }">
+                  <v-icon v-if="item.info">
+                    {{ item.icon ? item.icon : "mdi-cellphone" }}
+                  </v-icon>
+                </template>
+                <template v-slot:label="{ item }">
+                  <strong
+                    >{{ item.name }} <span v-if="item.info">:</span></strong
+                  >
+                  {{ item.info }}
+                </template>
+              </v-treeview>
+
+              <h3 class="mt-5">Tags:</h3>
+              <hr />
+              <v-chip class="mt-3">
+                {{ anuncio.estado }}
+              </v-chip>
+              <v-chip class="mt-3">
+                {{ anuncio.marca }}
+              </v-chip>
+              <v-chip class="mt-3">
+                {{ anuncio.sistema }}
+              </v-chip>
+              <v-chip class="mt-3">
+                {{ anuncio.modelo }}
+              </v-chip>
+              <br />
+              <div class=" mt-5 d-flex flex-row justify-center">
+                <v-btn color="yellow" class="black--text">
+                  <v-icon class="ml-3" @click="comprar()">
+                    mdi-cart
+                  </v-icon>
+                  Agregar
+                </v-btn>
+              </div>
             </div>
           </v-col>
         </v-row>
@@ -85,7 +131,13 @@ export default {
     return {
       anuncio: {},
       loaded: false,
+      telefonoTree: [],
     };
+  },
+  methods:{
+    comprar(){
+      this.$root.$emit("Added-to-cart", this.anuncio.id);
+    }
   },
   created() {
     var anuncioRef = db.collection("anuncios").doc(this.$route.params.id);
@@ -96,6 +148,85 @@ export default {
         console.log(doc.data());
         context.anuncio = doc.data();
         context.loaded = true;
+
+        context.telefonoTree = [
+          {
+            name: "Información",
+            icon: "",
+            info: " ",
+            children: [
+              {
+                name: "Marca",
+                info: context.anuncio.marca,
+                icon: "mdi-tag-text",
+              },
+              {
+                name: "Modelo",
+                info: context.anuncio.modelo,
+                icon: "mdi-tablet-cellphone",
+              },
+              {
+                name: "Sistema",
+                info: context.anuncio.sistema,
+                icon: "mdi-android",
+              },
+              {
+                name: "Estado",
+                info: context.anuncio.estado,
+                icon: "mdi-clipboard-pulse",
+              },
+              {
+                name: "Detalles",
+                info: context.anuncio.detalle
+                  ? context.anuncio.detalle
+                  : "No hay detalles disponibles",
+                icon: "mdi-comment",
+              },
+            ],
+          },
+          {
+            name: "Memoria",
+            info: " ",
+            icon: "mdi-memory",
+            children: [
+              {
+                name: "RAM",
+                info: context.anuncio.ram + " GB",
+                icon: "mdi-memory",
+              },
+              {
+                name: "Almacenamiento",
+                info: context.anuncio.almacenamiento + " GB",
+                icon: "mdi-database",
+              },
+            ],
+          },
+          {
+            name: "Cámaras",
+            info: " ",
+            icon: "mdi-camera",
+            children: [
+              {
+                name: "Frontal",
+                info:
+                  context.anuncio.camara_frontal +
+                  context.anuncio.camara_frontal
+                    ? " MP"
+                    : "",
+                icon: "mdi-account",
+              },
+              {
+                name: "Trasera",
+                info:
+                  context.anuncio.camara_trasera +
+                  context.anuncio.camara_trasera
+                    ? " MP"
+                    : "",
+                icon: "mdi-image-filter-hdr",
+              },
+            ],
+          },
+        ];
       } else {
         context.$router.push("/404");
       }
