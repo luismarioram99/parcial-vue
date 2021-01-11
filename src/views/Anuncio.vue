@@ -1,10 +1,17 @@
 <template>
   <div class="anuncio">
+    <v-container v-if="!loaded" class="progress-container">
+      <v-progress-circular indeterminate size="50">
+
+      </v-progress-circular>
+    </v-container>
     <v-container v-if="loaded">
-      <v-card elevation="8" class="my-5">
+      <v-card elevation="20" class="my-5">
         <v-row>
           <v-col cols="12" md="6">
-            <v-carousel class="mx-5 my-5">
+            <v-container fluid>
+
+            <v-carousel class="mx-md-5 my-5 elevation-8">
               <v-carousel-item v-for="item in anuncio.imagenes" :key="item.ref">
                 <v-img
                   :src="item.url"
@@ -27,6 +34,7 @@
                 </v-img>
               </v-carousel-item>
             </v-carousel>
+            </v-container>
           </v-col>
           <v-col cols="12" md="6">
             <div class="mx-5 my-5">
@@ -46,12 +54,12 @@
                 {{ anuncio.desc }}
               </p>
 
-              <v-expansion-panels class="elevation-10">
+              <v-expansion-panels class="elevation-3">
                 <v-expansion-panel>
                   <v-expansion-panel-header>
                     <v-row align="center" class="spacer" no-gutters>
-                      <v-col cols="4" sm="2" md="1">
-                        <v-avatar size="36px">
+                      <v-col class="mr-5" cols="4" sm="2" md="1">
+                        <v-avatar  size="36px">
                           <v-icon> mdi-account-circle</v-icon>
                         </v-avatar>
                       </v-col>
@@ -238,5 +246,17 @@ export default {
 <style scoped>
 .galeria-img {
   height: 100%;
+}
+.anuncio{
+  /* background-color: red; */
+  height:100%
+}
+.progress-container{
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* background-color: red; */
 }
 </style>

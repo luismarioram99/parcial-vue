@@ -147,12 +147,12 @@ export default {
       },
       {
         icon: "mdi-github",
-        url: "https://github.com/luismarioram99"
+        url: "https://github.com/luismarioram99",
       },
       {
         icon: "mdi-code-braces-box",
-        url: "http://codeforces.com/profile/luismarioram"
-      }
+        url: "http://codeforces.com/profile/luismarioram",
+      },
     ],
   }),
   mounted() {
