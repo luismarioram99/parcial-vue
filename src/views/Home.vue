@@ -1,10 +1,11 @@
 <template>
   <div class="home">
+    
     <v-container fluid>
       <v-row>
         <v-col cols="12" md="3" class="relative hidden-sm-and-down px5 pt-6">
+          
           <div class="filter-container">
-            
             <div class="d-flex flex-row justify-center align-center">
               <v-icon class="my-3">mdi-filter</v-icon>
               <h2>Filtros</h2>
@@ -126,7 +127,7 @@
                   cols="12"
                   sm="6"
                   md="4"
-                > 
+                >
                   <v-card class="mx-auto my-3" elevation="8">
                     <v-img
                       height="250"
@@ -199,12 +200,23 @@
                       </v-chip-group>
                     </v-card-text>
 
-                    <v-card-actions>
-                      <v-btn :to="'/anuncio/' + item.id" color="primary">
+                    <v-card-actions
+                      class="d-flex flex-row justify-center flex-wrap"
+                    >
+                      <v-btn
+                        :to="'/anuncio/' + item.id"
+                        color="primary"
+                        class="action-button"
+                      >
                         <v-icon>mdi-magnify</v-icon>
                         Detalles
                       </v-btn>
-                      <v-btn black color="yellow" class="black--text">
+                      <v-btn
+                        black
+                        color="yellow"
+                        @click="comprar(item)"
+                        class="black--text action-button"
+                      >
                         <v-icon>mdi-cart</v-icon>
                         Agregar
                       </v-btn>
@@ -219,8 +231,9 @@
     </v-container>
 
     <v-dialog v-model="filterDialog" width="500">
-      <template v-slot:activator>
+      <template v-slot:activator="{ on }">
         <v-btn
+          v-on="on"
           color="primary"
           @click="filterDialog = true"
           fab
@@ -370,7 +383,11 @@ export default {
   firestore: {
     anuncios: db.collection("anuncios"),
   },
-  methods: {},
+  methods: {
+    comprar(anuncio) {
+      this.$root.$emit("Added-to-cart", anuncio);
+    },
+  },
 };
 </script>
 
@@ -395,10 +412,13 @@ export default {
 .filter-container {
   position: relative;
 }
-.relative{
+.relative {
   position: relative;
 }
-.filter-container{
+.filter-container {
   position: fixed;
+}
+.action-button {
+  margin: 5px;
 }
 </style>

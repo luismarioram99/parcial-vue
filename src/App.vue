@@ -55,14 +55,22 @@
           Inicio <v-icon class="mx-2">mdi-home</v-icon></v-btn
         >
         <v-btn color="primary" elevation="0"
-          >Estadisticas <v-icon class="mx-2">mdi-finance</v-icon></v-btn
+          >Estadisticas <v-icon class="mx-2">mdi-fina nce</v-icon></v-btn
         >
 
         <NuevoAnuncio />
       </div>
-      <v-btn class="mx-2" fab small color="yellow">
-        <v-icon color="black"> mdi-cart </v-icon>
-      </v-btn>
+
+      <v-badge
+        :content="$store.getters.count"
+        :value="$store.getters.count"
+        color="red"
+        overlap
+      >
+        <v-btn class="mx-2" fab small color="yellow">
+          <v-icon color="black"> mdi-cart </v-icon>
+        </v-btn>
+      </v-badge>
     </v-app-bar>
 
     <v-main>
@@ -160,6 +168,10 @@ export default {
       this.snackText = snackText;
       this.snackColor = snackColor;
       this.snackbar = true;
+    });
+    this.$root.$on("Added-to-cart", (item) => {
+      console.log(item.id);
+      this.$store.commit("addToCart", item);
     });
   },
 };

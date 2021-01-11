@@ -117,8 +117,8 @@
               </v-chip>
               <br />
               <div class=" mt-5 d-flex flex-row justify-center">
-                <v-btn color="yellow" class="black--text">
-                  <v-icon class="ml-3" @click="comprar()">
+                <v-btn color="yellow" @click="comprar()" class="black--text">
+                  <v-icon class="ml-3">
                     mdi-cart
                   </v-icon>
                   Agregar
@@ -144,7 +144,8 @@ export default {
   },
   methods:{
     comprar(){
-      this.$root.$emit("Added-to-cart", this.anuncio.id);
+      this.anuncio.id = this.$route.params.id;
+      this.$root.$emit("Added-to-cart", this.anuncio);
     }
   },
   created() {
@@ -153,7 +154,7 @@ export default {
 
     anuncioRef.get().then(function (doc) {
       if (doc.exists) {
-        console.log(doc.data());
+        
         context.anuncio = doc.data();
         context.loaded = true;
 
