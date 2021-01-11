@@ -2,59 +2,63 @@
   <div class="home">
     <v-container fluid>
       <v-row>
-        <v-col cols="12" md="3" class="hidden-sm-and-down px-5 pt-6">
-          <div class="d-flex flex-row justify-center align-center">
-            <v-icon class="my-3">mdi-filter</v-icon>
-            <h2>Filtros</h2>
-          </div><div class="my-3">
-            <h3>Estado</h3>
-            <div
-              class="px-0 py-0 mx-0 my-0"
-              v-for="estado in estados"
-              :key="estado"
-            >
-              <v-checkbox
-                v-model="estadoSelect"
-                class="py-0 my-0"
-                hide-details
-                :label="estado"
-                :value="estado"
-              >
-              </v-checkbox>
+        <v-col cols="12" md="3" class="relative hidden-sm-and-down px5 pt-6">
+          <div class="filter-container">
+            
+            <div class="d-flex flex-row justify-center align-center">
+              <v-icon class="my-3">mdi-filter</v-icon>
+              <h2>Filtros</h2>
             </div>
-          </div>
-          <div class="my-3">
-            <h3>Marcas</h3>
-            <div
-              class="px-0 py-0 mx-0 my-0"
-              v-for="marca in marcas"
-              :key="marca"
-            >
-              <v-checkbox
-                v-model="marcaSelect"
-                class="py-0 my-0"
-                hide-details
-                :label="marca"
-                :value="marca"
+            <div class="my-3">
+              <h3>Estado</h3>
+              <div
+                class="px-0 py-0 mx-0 my-0"
+                v-for="estado in estados"
+                :key="estado"
               >
-              </v-checkbox>
+                <v-checkbox
+                  v-model="estadoSelect"
+                  class="py-0 my-0"
+                  hide-details
+                  :label="estado"
+                  :value="estado"
+                >
+                </v-checkbox>
+              </div>
             </div>
-          </div>
-          <div class="my-3">
-            <h3>Sistema Operativo</h3>
-            <div
-              class="px-0 py-0 mx-0 my-0"
-              v-for="sistema in sistemas"
-              :key="sistema"
-            >
-              <v-checkbox
-                v-model="sistemaSelect"
-                class="py-0 my-0"
-                hide-details
-                :label="sistema"
-                :value="sistema"
+            <div class="my-3">
+              <h3>Marcas</h3>
+              <div
+                class="px-0 py-0 mx-0 my-0"
+                v-for="marca in marcas"
+                :key="marca"
               >
-              </v-checkbox>
+                <v-checkbox
+                  v-model="marcaSelect"
+                  class="py-0 my-0"
+                  hide-details
+                  :label="marca"
+                  :value="marca"
+                >
+                </v-checkbox>
+              </div>
+            </div>
+            <div class="my-3">
+              <h3>Sistema Operativo</h3>
+              <div
+                class="px-0 py-0 mx-0 my-0"
+                v-for="sistema in sistemas"
+                :key="sistema"
+              >
+                <v-checkbox
+                  v-model="sistemaSelect"
+                  class="py-0 my-0"
+                  hide-details
+                  :label="sistema"
+                  :value="sistema"
+                >
+                </v-checkbox>
+              </div>
             </div>
           </div>
         </v-col>
@@ -122,7 +126,7 @@
                   cols="12"
                   sm="6"
                   md="4"
-                >
+                > 
                   <v-card class="mx-auto my-3" elevation="8">
                     <v-img
                       height="250"
@@ -196,7 +200,7 @@
                     </v-card-text>
 
                     <v-card-actions>
-                      <v-btn color="primary">
+                      <v-btn :to="'/anuncio/' + item.id" color="primary">
                         <v-icon>mdi-magnify</v-icon>
                         Detalles
                       </v-btn>
@@ -213,6 +217,91 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <v-dialog v-model="filterDialog" width="500">
+      <template v-slot:activator>
+        <v-btn
+          color="primary"
+          @click="filterDialog = true"
+          fab
+          class="esquina hidden-md-and-up"
+        >
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title class="headline grey lighten-2">
+          <div class="d-flex flex-row justify-center align-center w-100">
+            <v-icon class="my-3">mdi-filter</v-icon>
+            <h2>Filtros</h2>
+          </div>
+        </v-card-title>
+
+        <v-card-text>
+          <div class="my-3">
+            <h3>Estado</h3>
+            <div
+              class="px-0 py-0 mx-0 my-0"
+              v-for="estado in estados"
+              :key="estado"
+            >
+              <v-checkbox
+                v-model="estadoSelect"
+                class="py-0 my-0"
+                hide-details
+                :label="estado"
+                :value="estado"
+              >
+              </v-checkbox>
+            </div>
+          </div>
+          <div class="my-3">
+            <h3>Marcas</h3>
+            <div
+              class="px-0 py-0 mx-0 my-0"
+              v-for="marca in marcas"
+              :key="marca"
+            >
+              <v-checkbox
+                v-model="marcaSelect"
+                class="py-0 my-0"
+                hide-details
+                :label="marca"
+                :value="marca"
+              >
+              </v-checkbox>
+            </div>
+          </div>
+          <div class="my-3">
+            <h3>Sistema Operativo</h3>
+            <div
+              class="px-0 py-0 mx-0 my-0"
+              v-for="sistema in sistemas"
+              :key="sistema"
+            >
+              <v-checkbox
+                v-model="sistemaSelect"
+                class="py-0 my-0"
+                hide-details
+                :label="sistema"
+                :value="sistema"
+              >
+              </v-checkbox>
+            </div>
+          </div>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="filterDialog = false">
+            Aceptar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
         
@@ -230,6 +319,7 @@ export default {
       busqueda: "",
       ordenar: {},
       sortDesc: true,
+      filterDialog: false,
       marcas: ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo"],
       estados: [
         "Sellado",
@@ -265,23 +355,17 @@ export default {
       if (this.sistemaSelect.length) return this.sistemaSelect;
       else return this.sistemas;
     },
-    anunciosFiltrado(){
+    anunciosFiltrado() {
+      return this.anuncios.filter((v) => {
+        if (!this.marcasFiltrado.includes(v.marca)) return false;
 
-      return this.anuncios.filter(v => {
+        if (!this.estadosFiltrado.includes(v.estado)) return false;
 
-        if(!this.marcasFiltrado.includes(v.marca))
-          return false;
-        
-        if(!this.estadosFiltrado.includes(v.estado))
-          return false;
-        
-        if(!this.sistemasFiltrado.includes(v.sistema))
-          return false;
-        
+        if (!this.sistemasFiltrado.includes(v.sistema)) return false;
+
         return true;
       });
-  
-    }
+    },
   },
   firestore: {
     anuncios: db.collection("anuncios"),
@@ -294,8 +378,27 @@ export default {
 .home {
   padding: 0;
   margin: 0;
+  position: relative;
 }
 .borders {
   border: solid black 1px;
+}
+.esquina {
+  position: fixed;
+  z-index: 99;
+  bottom: 20px;
+  right: 20px;
+}
+.w-100 {
+  width: 100%;
+}
+.filter-container {
+  position: relative;
+}
+.relative{
+  position: relative;
+}
+.filter-container{
+  position: fixed;
 }
 </style>

@@ -1,15 +1,7 @@
 <template>
   <v-app>
-    <v-navigation-drawer absolute dark color="primary" v-model="drawer" left>
+    <v-navigation-drawer fixed dark color="primary" v-model="drawer" left>
       <v-list>
-        <v-list-item class="px-2">
-          <v-list-item-avatar>
-            <v-img
-              src="https://randomuser.me/api/portraits/women/85.jpg"
-            ></v-img>
-          </v-list-item-avatar>
-        </v-list-item>
-
         <v-list-item link class="mt-5">
           <v-list-item-content>
             <v-list-item-title class="title"> Invitado </v-list-item-title>
@@ -77,6 +69,41 @@
       <router-view></router-view>
     </v-main>
 
+    <v-footer dark padless>
+      <v-card
+        flat
+        tile
+        dark
+        color="primary"
+        class="lighten-1 white--text text-center w-100"
+      >
+        <v-card-text>
+          <v-btn
+            v-for="icon in icons"
+            :key="icon.icon"
+            class="mx-4 white--text"
+            icon
+            :href="icon.url"
+            target="_blank"
+          >
+            <v-icon size="24px">
+              {{ icon.icon }}
+            </v-icon>
+          </v-btn>
+        </v-card-text>
+
+        <v-card-text class="white--text pt-0">
+          Luis Mario Ramirez Peralta - RP18011
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="white--text">
+          {{ new Date().getFullYear() }} — <strong>FPI UES FMOcc</strong>
+        </v-card-text>
+      </v-card>
+    </v-footer>
+
     <v-snackbar v-model="snackbar" :timeout="timeout">
       {{ snackText }}
 
@@ -109,6 +136,24 @@ export default {
     timeout: 2000,
     snackText: "Prueba",
     snackColor: "green",
+    icons: [
+      {
+        icon: "mdi-twitter",
+        url: "https://twitter.com/luismarioram99",
+      },
+      {
+        icon: "mdi-instagram",
+        url: "https://www.instagram.com/_mario.verde/",
+      },
+      {
+        icon: "mdi-github",
+        url: "https://github.com/luismarioram99"
+      },
+      {
+        icon: "mdi-code-braces-box",
+        url: "http://codeforces.com/profile/luismarioram"
+      }
+    ],
   }),
   mounted() {
     this.$root.$on("snackbar-message", (snackText, snackColor) => {
@@ -119,4 +164,8 @@ export default {
   },
 };
 </script>
-<style lang="stylus"></style>
+<style scoped>
+.w-100 {
+  width: 100vw !important;
+}
+</style>

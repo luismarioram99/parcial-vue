@@ -116,6 +116,36 @@
                   >
                   </v-text-field>
 
+                   <v-row>
+                    <v-col md="6" cols="12">
+                      <v-text-field
+                        v-model="nuevoAnuncio.camara_trasera"
+                        type="number"
+                        min="0"
+                        suffix="Pulg"
+                        :rules="rules.camara"
+                        label="Cámara trasera"
+                      >
+                      </v-text-field>
+                    </v-col>
+                    <v-col md="6" cols="12">
+                      <v-text-field
+                        v-model="nuevoAnuncio.camara_frontal"
+                        type="number"
+                        min="0"
+                        suffix="Pulg"
+                        :rules="rules.camara"
+                        label="Cámara frontal"
+                      >
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-textarea
+                    label="Detálles"
+                    v-model="nuevoAnuncio.detalles"
+                    :counter="maxDesc"
+                    :rules="rules.detalles"
+                  ></v-textarea>
                   <h2 class="mt-5">Galería de imágenes</h2>
                   <hr />
                   <div class="d-flex align-items-center pt-9">
@@ -236,6 +266,7 @@
                   </v-text-field>
 
                   <v-text-field
+                    v-model="nuevoAnuncio.telefono"
                     label="Numero telefónico"
                     prefix="+503"
                     placeholder="00000000"
@@ -391,7 +422,16 @@ export default {
             !!this.subidas.length ||
             this.imagen ||
             "Debe subir al menos una imagen",
+            
         ],
+        camara:[
+                    (v) => !!v || "Este campo es requerido",
+          (v) => (v && v > 0) || "La resolución debe ser mayor a 0",
+          (v) => (v && v <= 128) || "La resolución debe ser menor a 128 MP",
+        ],
+        detalles:[
+          (v) => (!v || v.length <= 500) || "Los detalles no debe exceder 500 caracteres",
+        ]
       },
     };
   },
