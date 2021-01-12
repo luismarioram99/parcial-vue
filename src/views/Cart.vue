@@ -192,6 +192,8 @@ export default {
     if(this.$store.state.descuento){
       this.descuento = this.$store.state.descuento;
       validated = true;
+    }else{
+      validated = false;
     }
     
   },

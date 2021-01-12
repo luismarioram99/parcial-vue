@@ -43,6 +43,9 @@ export default new Vuex.Store({
     },
     añadirDescuento(state,descuento) {
       state.descuento = descuento;
+    },
+    quitarDescuento(state) {
+      state.descuento = 0;
     }
   },
   getters: {
