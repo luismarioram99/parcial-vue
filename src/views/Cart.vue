@@ -6,10 +6,10 @@
         <v-col cols="12" md="9" class="px-5 py-5">
           <v-data-table
             :headers="headers"
-            :items="cart"
+            :items="this.$store.state.cart"
             hide-default-footer
             no-data-text="Agregue elementos al carrito!"
-            class="elevation-10"
+            class="elevation-15"
           >
             <template v-slot:item.precio="{ item }">
               $ {{ item.precio }}
@@ -43,7 +43,9 @@
               Limpiar
           </v-btn>
         </v-col>
-        <v-col cols="12" md="3"></v-col>
+        <v-col cols="12" md="3">
+          
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -55,6 +57,7 @@ export default {
   name: "Carrito",
   data() {
     return {
+      cart: [],
       headers: [
         { text: "Teléfono", align: "center", value: "modelo" },
         { text: "Precio", value: "precio" },
@@ -66,22 +69,27 @@ export default {
     };
   },
   computed:{
-      cart(){
-          return this.$store.state.cart;
-      }
+      
   },
   methods: {
     incrementar(item) {
         this.$store.commit("addToCart", item);
+        
     },
-    decrementar(item) {        
+    decrementar(item) {   
         this.$store.commit("removeFromCart", item);
+    },
+    borrar(item){
+        this.$store.commit("deleteFromCart", item);
     },
     clearCart(){
         this.$store.commit("clearCart");
+        this.cart = this.$store.state.cart;
     }
   },
-  created() {},
+  created() {
+    this.cart = this.$store.state.cart;
+  },
 };
 </script>
 
