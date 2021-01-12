@@ -67,7 +67,7 @@
         color="red"
         overlap
       >
-        <v-btn class="mx-2" fab small color="yellow">
+        <v-btn class="mx-2" to="/cart" fab small color="yellow">
           <v-icon color="black"> mdi-cart </v-icon>
         </v-btn>
       </v-badge>

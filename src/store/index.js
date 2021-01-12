@@ -10,18 +10,30 @@ export default new Vuex.Store({
   },
   mutations: {
     addToCart(state, item) {
+      
+      const cart = state.cart;
 
-      let found = state.cart.find(compra => compra.anuncio.id == item.id)
+      let found = cart.find(compra => compra.key == item.key)
+
+      console.log("incremento");
 
       if (found) {
         found.cantidad++;
       } else {
+        
+        item.cantidad = 1
+        cart.push(item);
+        state.cart = cart;
+      }
 
-        state.cart.push({
-          anuncio: item,
-          cantidad: 1
-        });
+    },
+    removeFromCart(state, item) {
+      let found = state.cart.findIndex(compra => compra.key == item.key)
+      console.log("decremento");
 
+      state.cart[found].cantidad--;
+      if (!state.cart[found].cantidad) {
+        state.cart.splice(found, 1);
       }
 
     },
@@ -30,6 +42,13 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getCant: (state) => (key) => {
+      let found = state.cart.findIndex(compra => compra.key == key)
+      if (state.cart[found])
+        return state.cart[found].cantidad;
+      else
+        return 0;
+    },
     count: state => {
       return state.cart.length;
     }

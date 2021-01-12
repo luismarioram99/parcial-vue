@@ -326,7 +326,7 @@ export default {
       valid: true,
       maxModel: 10,
       snacktext: "El anuncio ha sido creado correctamente",
-      maxTitulo: 20,
+      maxTitulo: 100,
       maxDesc: 500,
       maxNombre: 20,
 
@@ -381,7 +381,7 @@ export default {
           (v) => !!v || "Este campo es requerido",
           (v) =>
             (v && v.length <= this.maxTitulo) ||
-            "El titulo no debe exceder 20 caracteres",
+            "El titulo no debe exceder " +this.maxTitulo + " caracteres",
         ],
         desc: [
           (v) => !!v || "Este campo es requerido",
@@ -420,7 +420,7 @@ export default {
         imagenes: [
           () =>
             !!this.subidas.length ||
-            this.imagen ||
+            !!this.imagen ||
             "Debe subir al menos una imagen",
             
         ],
@@ -522,11 +522,20 @@ export default {
         storageRef.child(this.subidas[i].ref).delete();
       }
     },
-    guardar() {
+    guardar() {      
+      console.log(this.subidas);
       this.nuevoAnuncio.imagenes = this.subidas;
 
       if (this.$refs.form.validate()) {
-        db.collection("anuncios").add(this.nuevoAnuncio);
+        db.collection("anuncios").add(this.nuevoAnuncio).then((docRef)=>{
+          
+          var refId = docRef.id;
+          
+          db.collection("anuncios").doc(docRef.id).set({
+            key: refId
+          }, {merge: true});
+          console.log(refId);
+        });
 
         this.$refs.form.reset();
 

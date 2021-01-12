@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Anuncio from '../views/Anuncio.vue'
+import Cart from '../views/Cart.vue'
 
 Vue.use(VueRouter)
 
@@ -12,10 +13,15 @@ const routes = [
     component: Home
   },
   {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
+  },
+  {
     path: '/anuncio/:id',
     name: 'Anuncio',
     component: Anuncio
-  }
+  },
 ]
 
 const router = new VueRouter({
