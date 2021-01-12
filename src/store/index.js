@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    cart: []
+    cart: [],
+    descuento: 0
   },
   mutations: {
     addToCart(state, item) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     clearCart(state) {
       state.cart = [];
+    },
+    añadirDescuento(state,descuento) {
+      state.descuento = descuento;
     }
   },
   getters: {
@@ -48,6 +52,12 @@ export default new Vuex.Store({
         return state.cart[found].cantidad;
       else
         return 0;
+    },
+    getTotal: (state) => {
+      var total = 0;
+      for (var i = 0; i < state.cart.length; i++) total += state.cart[i].precio * state.cart[i].cantidad
+      
+      return total;
     },
     count: state => {
       return state.cart.length;

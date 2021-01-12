@@ -33,6 +33,7 @@
 
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
+        <router-link to="/">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
@@ -41,6 +42,8 @@
           transition="scale-transition"
           width="200"
         />
+
+        </router-link>
       </div>
 
       <v-spacer></v-spacer>
