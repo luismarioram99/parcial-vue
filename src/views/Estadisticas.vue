@@ -25,8 +25,42 @@
             <v-divider></v-divider>
             <v-card-text>
               <div>
-                <bar-chart :options="chartOptions" :styles="chartStyles" :chart-data="barData"></bar-chart>
-              </div>  
+                <bar-chart
+                  :options="chartOptions"
+                  :styles="chartStyles"
+                  :chart-data="barData"
+                ></bar-chart>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col col="12" md="6">
+          <v-card elevation="15">
+            <v-card-title> Ventas, Descuentos y Ganancias </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              <div>
+                <line-chart
+                  :options="chartOptions"
+                  :styles="chartStyles"
+                  :chart-data="lineData"
+                ></line-chart>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-col>
+         <v-col col="12" md="6">
+          <v-card elevation="15">
+            <v-card-title> Datos acumulados </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              <div>
+                <line-chart
+                  :options="chartOptions"
+                  :styles="chartStyles"
+                  :chart-data="lineData2"
+                ></line-chart>
+              </div>
             </v-card-text>
           </v-card>
         </v-col>
@@ -37,7 +71,8 @@
 
 <script>
 import DoughnutChart from "../charts/DoughnutChart.js";
-import BarChart from "../charts/BarChart.js"
+import BarChart from "../charts/BarChart.js";
+import LineChart from "../charts/LineChart.js";
 import { db } from "../firebase";
 export default {
   name: "Estadisticas",
@@ -46,6 +81,8 @@ export default {
       ready: true,
       doughnutData1: {},
       barData: {},
+      lineData: {},
+      lineData2: {},
 
       chartOptions: {
         responsive: true,
@@ -60,11 +97,11 @@ export default {
   components: {
     DoughnutChart,
     BarChart,
+    LineChart,
   },
   methods: {
     async fillData() {
-
-      this.ready = false;      
+      this.ready = false;
 
       var ventas = [];
       await db
@@ -86,7 +123,6 @@ export default {
           });
         });
 
-      
       var marcas = ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo"];
       var countMap = {};
       marcas.forEach((marca) => {
@@ -126,7 +162,7 @@ export default {
 
       ventas.forEach((venta) => {
         venta.carrito.forEach((item) => {
-          countMap[item.marca] ++;
+          countMap[item.marca]++;
         });
       });
 
@@ -139,7 +175,7 @@ export default {
         labels: marcas,
         datasets: [
           {
-            label: "Data ",
+            label: "ventas",
             backgroundColor: [
               "#FCBA04",
               "#A50104",
@@ -152,6 +188,106 @@ export default {
           },
         ],
       };
+
+      var fechas = [];
+      var ventaCant = [];
+      var descuentoCant = [];
+      var gananciaCant = [];
+
+      ventas.forEach((venta) => {
+        var total = 0;
+        venta.carrito.forEach((item) => {
+          total += item.precio * item.cantidad;
+        });
+        ventaCant.push(total);
+        descuentoCant.push(venta.descuento);
+        gananciaCant.push(total * 0.50);
+        fechas.push(venta.timestamp.toDate());
+      });
+
+      this.lineData = {
+        labels: fechas.map(
+          (venta) =>
+            "" +
+            (venta.getMonth() + 1) +
+            "/" +
+            venta.getDate() +
+            " " +
+            venta.getHours() +
+            ":" +
+            venta.getMinutes()
+        ),
+        datasets: [
+          {
+            label: "ganancia",
+            backgroundColor: "rgba(50,50,255,0.8)",
+            data: gananciaCant,
+          },
+          {
+            label: "descuentos",
+            backgroundColor: "rgba(50,255,50,0.8)",
+            data: descuentoCant,
+          },
+          {
+            label: "ventas",
+            backgroundColor: "rgba(255,50,50,0.8)",
+            data: ventaCant,
+          },
+        ],
+      };
+
+      var ventaAcum = [];
+      var descuentoAcum = [];
+      var gananciaAcum = [];
+
+      var suma = 0;
+      ventaCant.forEach(venta => {
+        suma += venta;
+        ventaAcum.push(suma);
+      });
+
+      suma = 0;
+      descuentoCant.forEach(venta => {
+        suma += venta;
+        descuentoAcum.push(suma);
+      });
+
+      
+      for(var i = 0; i < descuentoAcum.length; i++){
+        gananciaAcum.push(ventaAcum[i]*0.50 - descuentoAcum[i]);
+      }
+
+       this.lineData2 = {
+        labels: fechas.map(
+          (venta) =>
+            "" +
+            (venta.getMonth() + 1) +
+            "/" +
+            venta.getDate() +
+            " " +
+            venta.getHours() +
+            ":" +
+            venta.getMinutes()
+        ),
+        datasets: [
+          {
+            label: "ganancia",
+            backgroundColor: "rgba(50,50,255,0.8)",
+            data: gananciaAcum,
+          },
+          {
+            label: "descuentos",
+            backgroundColor: "rgba(50,255,50,0.8)",
+            data: descuentoAcum,
+          },
+          {
+            label: "ventas",
+            backgroundColor: "rgba(255,50,50,0.8)",
+            data: ventaAcum,
+          },
+        ],
+      };
+
 
       this.ready = true;
     },
