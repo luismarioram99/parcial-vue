@@ -5,6 +5,7 @@ import Anuncio from '../views/Anuncio.vue'
 import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
 import Done from '../views/Done.vue'
+import Terms from '../views/Terms.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
     path: '/done',
     name: 'Done',
     component: Done
+  }, {
+    path: '/terms',
+    name: 'Terminos',
+    component: Terms
+
   }
 ]
 

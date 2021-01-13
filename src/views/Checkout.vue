@@ -135,6 +135,7 @@
 
 <script>
 import { db } from "../firebase";
+import firebase from 'firebase/app'
 export default {
   name: "Checkout",
   data() {
@@ -166,14 +167,20 @@ export default {
   },
   methods: {
     send() {
+      
       if (this.$refs.form.validate()) {
         var cart = this.$store.state.cart;
         var descuento = this.$store.state.descuento;
+        var time = firebase.firestore.Timestamp.fromDate(new Date());
+
+        
+        console.log(typeof(time));
 
         var compra = {
           carrito: cart,
           descuento: descuento,
           cliente: this.cliente,
+          timestamp: time
         };
 
         var context = this;
@@ -189,6 +196,8 @@ export default {
               "green"
             );
             context.$router.push("/done");
+          }).catch((error)=>{
+            console.log(error);
           });
       }
     },

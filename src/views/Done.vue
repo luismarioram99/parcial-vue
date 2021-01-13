@@ -14,7 +14,7 @@
         Tu pedido está en camino. <br />
         Un repartidor te contactará en breve.
       </p>
-      <v-btn color="green">
+      <v-btn color="green" to="/">
         Inicio
       </v-btn>
     </div>
