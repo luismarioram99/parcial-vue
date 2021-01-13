@@ -21,7 +21,8 @@
           </v-list-item-icon>
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
-        <v-list-item>
+        
+        <v-list-item link to="/stats">
           <v-list-item-icon>
             <v-icon>mdi-finance</v-icon>
           </v-list-item-icon>
@@ -55,10 +56,10 @@
 
       <div class="hidden-sm-and-down">
         <v-btn color="primary" elevation="0" to="/" active-class="lighten-1">
-          Inicio <v-icon class="mx-2">mdi-home</v-icon></v-btn
+          Inicio <v-icon class="ml-2">mdi-home</v-icon></v-btn
         >
-        <v-btn color="primary" elevation="0"
-          >Estadisticas <v-icon class="mx-2">mdi-fina nce</v-icon></v-btn
+        <v-btn color="primary" to="/stats" elevation="0"
+          >Estadisticas <v-icon class="ml-2">mdi-finance</v-icon></v-btn
         >
 
         <NuevoAnuncio />

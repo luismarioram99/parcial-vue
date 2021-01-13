@@ -6,6 +6,7 @@ import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
 import Done from '../views/Done.vue'
 import Terms from '../views/Terms.vue'
+import Estadisticas from '../views/Estadisticas.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -36,7 +37,10 @@ const routes = [
     path: '/terms',
     name: 'Terminos',
     component: Terms
-
+  }, {
+    path: '/stats',
+    name: 'Estadisticas',
+    component: Estadisticas
   }
 ]
 
