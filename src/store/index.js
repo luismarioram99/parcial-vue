@@ -20,7 +20,7 @@ export default new Vuex.Store({
         found.cantidad++;
       } else {
         item = { ...item, cantidad: 1 };
-        state.cart.push(item);        
+        state.cart = [...state.cart, item];        
       }
 
     },

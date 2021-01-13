@@ -129,6 +129,30 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-snackbar v-model="cartSnackbar" :timeout="timeout">
+      Se ha agreagado exitosamente al carrito.
+      <template v-slot:action="{ attrs }">
+        <v-btn          
+          text
+          color="yellow"
+          to="/cart"
+        >
+          <v-icon class="mr-3">
+            mdi-cart
+          </v-icon>
+          Ir
+        </v-btn>
+        <v-btn          
+          text
+          v-bind="attrs"
+          @click="cartSnackbar = false"
+        >
+          <v-icon>
+            mdi-close
+          </v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -143,6 +167,7 @@ export default {
 
   data: () => ({
     drawer: false,
+    cartSnackbar: false,
     snackbar: false,
     timeout: 2000,
     snackText: "Prueba",
@@ -176,6 +201,18 @@ export default {
       console.log(item.id);
       this.$store.commit("addToCart", item);
     });
+    this.$root.$on("Added-to-cart", ()=>{
+
+      if(this.cartSnackbar){
+        this.cartSnackbar = false;
+        setTimeout(()=>{
+          this.cartSnackbar = true;
+        }, 100);
+      }else{
+        this.cartSnackbar = true;
+      }
+
+    })
   },
 };
 </script>

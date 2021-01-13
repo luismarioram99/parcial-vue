@@ -140,7 +140,7 @@ export default {
   name: "Carrito",
   data() {
     return {
-      cart: [],
+      cart: this.$store.state.cart,
       show: false,
       promoText: "",
       headers: [
@@ -187,7 +187,6 @@ export default {
     },
   },
   created() {
-    this.cart = this.$store.state.cart;
     
     if(this.$store.state.descuento){
       this.descuento = this.$store.state.descuento;
