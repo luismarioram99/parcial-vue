@@ -123,7 +123,7 @@
                         v-model="nuevoAnuncio.camara_trasera"
                         type="number"
                         min="0"
-                        suffix="Pulg"
+                        suffix="MP"
                         :rules="rules.camara"
                         label="Cámara trasera"
                       >
@@ -134,7 +134,7 @@
                         v-model="nuevoAnuncio.camara_frontal"
                         type="number"
                         min="0"
-                        suffix="Pulg"
+                        suffix="MP"
                         :rules="rules.camara"
                         label="Cámara frontal"
                       >
@@ -330,7 +330,7 @@ export default {
       maxTitulo: 100,
       maxDesc: 500,
       maxNombre: 20,
-
+      subidasValid: true,
       maxEmail: 50,
 
       uploadProgress: 0,
@@ -423,13 +423,13 @@ export default {
         ],
         imagenes: [
           () =>
-            !!this.subidas.length ||
-            !!this.imagen ||
+            !!this.subidas.length || !!this.imagen ||
             "Debe subir al menos una imagen",
+          () => this.subidasValid || "Debe subir al menos una imagen para guardar."
             
         ],
         camara:[
-                    (v) => !!v || "Este campo es requerido",
+          (v) => !!v || "Este campo es requerido",
           (v) => (v && v > 0) || "La resolución debe ser mayor a 0",
           (v) => (v && v <= 128) || "La resolución debe ser menor a 128 MP",
         ],
@@ -498,6 +498,7 @@ export default {
           }
 
           this.imageDir = dir;
+    
         }
 
         var imgRef = storageRef.child(this.imageDir + "/" + this.imagen.name);
@@ -525,6 +526,7 @@ export default {
           }
         );
       }
+
     },
     limpiar() {
       this.$refs.form.reset();
@@ -537,7 +539,10 @@ export default {
       console.log(this.subidas);
       this.nuevoAnuncio.imagenes = this.subidas;
 
+      if(this.subidas.length == 0) this.subidasValid = false;
+
       if (this.$refs.form.validate()) {
+
         db.collection("anuncios").add(this.nuevoAnuncio).then((docRef)=>{
           
           var refId = docRef.id;

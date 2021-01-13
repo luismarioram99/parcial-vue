@@ -131,7 +131,7 @@
                   <v-card class="mx-auto my-3" elevation="8">
                     <v-img
                       height="250"
-                      :src="item.imagenes[0].url"
+                      :src="item.imagenes.length>0?item.imagenes[0].url:'../assets/logo.svg'"
                       lazy-src="../assets/placeholder.png"
                     >
                       <template v-slot:placeholder>

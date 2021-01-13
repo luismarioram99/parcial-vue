@@ -9,8 +9,13 @@
             <v-card-title> Marcas publicadas </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
-              <LineChart :chart-data="datacollection" />
-              <button @click="fillData()">Randomize</button>
+              <div>
+                <doughnut-chart
+                  :options="chartOptions"
+                  :styles="chartStyles"
+                  :chart-data="doughnutData1"
+                />
+              </div>
             </v-card-text>
           </v-card>
         </v-col>
@@ -18,7 +23,11 @@
           <v-card elevation="15">
             <v-card-title> Marcas Compradas </v-card-title>
             <v-divider></v-divider>
-            <v-card-text> </v-card-text>
+            <v-card-text>
+              <div>
+                <doughnut-chart :options="chartOptions" :styles="chartStyles" :chart-data="doughnutData2"></doughnut-chart>
+              </div>  
+            </v-card-text>
           </v-card>
         </v-col>
       </v-row>
@@ -27,34 +36,129 @@
 </template>
 
 <script>
-import LineChart from "../charts/LineChart.js";
+import DoughnutChart from "../charts/DoughnutChart.js";
+import { db } from "../firebase";
 export default {
   name: "Estadisticas",
   data() {
     return {
-      datacollection: null,
+      ready: true,
+      doughnutData1: {},
+      doughnutData2: {},
+
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+      chartStyles: {
+        height: "400px",
+        width: "100%",
+      },
     };
   },
   components: {
-    LineChart,
+    DoughnutChart,
   },
   methods: {
-    fillData() {
-      this.datacollection = {
-        labels: [this.getRandomInt(), this.getRandomInt()],
+    async fillData() {
+
+      this.ready = false;      
+
+      var ventas = [];
+      await db
+        .collection("ventas")
+        .get()
+        .then((query) => {
+          query.forEach((doc) => {
+            ventas.push(doc.data());
+          });
+        });
+
+      var publicaciones = [];
+      await db
+        .collection("anuncios")
+        .get()
+        .then((query) => {
+          query.forEach((doc) => {
+            publicaciones.push(doc.data());
+          });
+        });
+
+      
+      var marcas = ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo"];
+      var countMap = {};
+      marcas.forEach((marca) => {
+        countMap[marca] = 0;
+      });
+
+      publicaciones.forEach((publicacion) => {
+        countMap[publicacion.marca]++;
+      });
+
+      var counts = [];
+      marcas.forEach((marca) => {
+        counts.push(countMap[marca]);
+      });
+
+      this.doughnutData1 = {
+        labels: marcas,
         datasets: [
           {
-            label: "Data One",
-            backgroundColor: "#AA0000",
-            data: [this.getRandomInt(), this.getRandomInt(),this.getRandomInt(),this.getRandomInt()],
-          }
-          
+            label: "Data ",
+            backgroundColor: [
+              "#FCBA04",
+              "#A50104",
+              "#020122",
+              "#7FB685",
+              "#426A5A",
+              "#677DB7",
+            ],
+            data: counts,
+          },
         ],
       };
+
+      marcas.forEach((marca) => {
+        countMap[marca] = 0;
+      });
+
+      ventas.forEach((venta) => {
+        venta.carrito.forEach((item) => {
+          countMap[item.marca] ++;
+        });
+      });
+
+      counts = [];
+      marcas.forEach((marca) => {
+        counts.push(countMap[marca]);
+      });
+
+      this.doughnutData2 = {
+        labels: marcas,
+        datasets: [
+          {
+            label: "Data ",
+            backgroundColor: [
+              "#FCBA04",
+              "#A50104",
+              "#020122",
+              "#7FB685",
+              "#426A5A",
+              "#677DB7",
+            ],
+            data: counts,
+          },
+        ],
+      };
+
+      this.ready = true;
     },
     getRandomInt() {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
     },
+  },
+  mounted() {
+    this.fillData();
   },
 };
 </script>
