@@ -68,7 +68,7 @@
           </v-btn>
         </v-col>
         <v-col cols="12" md="3" class="py-5">
-          <v-card class="mx-auto">
+          <v-card class="mx-auto" elevation="15">
             <v-card-text>
               <div>Total</div>
               <p class="display-1 text--primary" v-if="!promo">
