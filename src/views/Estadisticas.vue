@@ -25,7 +25,7 @@
             <v-divider></v-divider>
             <v-card-text>
               <div>
-                <doughnut-chart :options="chartOptions" :styles="chartStyles" :chart-data="doughnutData2"></doughnut-chart>
+                <bar-chart :options="chartOptions" :styles="chartStyles" :chart-data="barData"></bar-chart>
               </div>  
             </v-card-text>
           </v-card>
@@ -37,6 +37,7 @@
 
 <script>
 import DoughnutChart from "../charts/DoughnutChart.js";
+import BarChart from "../charts/BarChart.js"
 import { db } from "../firebase";
 export default {
   name: "Estadisticas",
@@ -44,7 +45,7 @@ export default {
     return {
       ready: true,
       doughnutData1: {},
-      doughnutData2: {},
+      barData: {},
 
       chartOptions: {
         responsive: true,
@@ -58,6 +59,7 @@ export default {
   },
   components: {
     DoughnutChart,
+    BarChart,
   },
   methods: {
     async fillData() {
@@ -133,7 +135,7 @@ export default {
         counts.push(countMap[marca]);
       });
 
-      this.doughnutData2 = {
+      this.barData = {
         labels: marcas,
         datasets: [
           {

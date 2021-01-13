@@ -194,9 +194,9 @@
                         active-class="deep-purple accent-4 white--text"
                         column
                       >
-                        <v-chip>{{ item.marca }}</v-chip>
-                        <v-chip>{{ item.modelo }}</v-chip>
-                        <v-chip>{{ item.sistema }}</v-chip>
+                        <v-chip @click="filtrarPor(item.marca)">{{ item.marca }}</v-chip>
+                        <v-chip @click="filtrarPor(item.modelo)">{{ item.modelo }}</v-chip>
+                        <v-chip @click="filtrarPor(item.sistema)">{{ item.sistema }}</v-chip>
                       </v-chip-group>
                     </v-card-text>
 
@@ -384,6 +384,10 @@ export default {
     anuncios: db.collection("anuncios"),
   },
   methods: {
+    filtrarPor(param){
+      if(this.busqueda == param) this.busqueda = "";
+      else this.busqueda = param;
+    },
     comprar(anuncio) {
       this.$root.$emit("Added-to-cart", anuncio);
     },
