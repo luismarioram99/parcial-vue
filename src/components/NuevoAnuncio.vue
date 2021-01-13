@@ -65,6 +65,7 @@
                     :items="marcas"
                     :rules="rules.selection"
                     v-model="nuevoAnuncio.marca"
+                    v-on:change="selectSistema()"
                     label="Marca"
                   ></v-select>
                   <v-select
@@ -354,7 +355,10 @@ export default {
         "Usado",
       ],
       sistemas: ["IOS", "Android", "Windows", "Lineage OS"],
-      nuevoAnuncio: {},
+      nuevoAnuncio: {
+        sistema: "",
+        marca: ""
+      },
       rules: {
         selection: [(v) => !!v || "Este campo es requerido"],
         modelo: [
@@ -436,6 +440,13 @@ export default {
     };
   },
   methods: {
+    selectSistema(){
+      if(this.nuevoAnuncio.marca == "Apple"){
+        this.nuevoAnuncio.sistema = "IOS";
+      }else{
+        this.nuevoAnuncio.sistema = "Android"
+      }
+    },
     makeid(length) {
       var result = "";
       var characters =
