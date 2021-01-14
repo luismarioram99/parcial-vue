@@ -6,7 +6,7 @@
         height="500"
         class="px-0 py-0 mx-0 elevation-15"
         dark
-        :src="require('../assets/backgrounds/' + imageDir)"
+        :src="imageDir"
       >
         <v-overlay
           value="true"
@@ -15,6 +15,8 @@
           absolute
           class="mx-0 px-0 text-center"
         >
+          <div v-if="!loading">
+
           <h1 class="text-h2 text-bold font-weight-medium" v-scrollanimation>
             Compra y vende teléfonos aquí!
           </h1>
@@ -29,6 +31,7 @@
           >
             Aprende más
           </v-btn>
+          </div>
         </v-overlay>
       </v-parallax>
     </v-container>
@@ -373,6 +376,8 @@ export default {
   },
   data() {
     return {
+      loading: true,
+      backgroundImg: null,
       imageDir: "",
       busqueda: "",
       ordenar: {},
@@ -441,7 +446,19 @@ export default {
     },
   },
   created() {
-    this.imageDir = "image" + this.getRandomInt(1, 15) + ".jpg";
+    
+    let backgroundImg = new Image();
+    
+    console.log("Here");
+
+    backgroundImg.onload = () => {
+      this.loading = false;
+      this.imageDir = backgroundImg.src;
+      console.log("loaded image...")
+    }
+
+    backgroundImg.src = "https://picsum.photos/2000/1000?random";
+
   },
 };
 </script>
