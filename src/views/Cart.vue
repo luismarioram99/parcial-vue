@@ -3,7 +3,7 @@
     <v-container class="mt-5">
       <h1 class="mx-5">Carrito de compras</h1>
       <v-row>
-        <v-col cols="12" md="9" class="px-5 py-5">
+        <v-col cols="12" md="9" class="px-5 py-5" v-scrollanimation>
           <v-data-table
             :headers="headers"
             :items="this.$store.state.cart"
@@ -68,7 +68,7 @@
           </v-btn>
         </v-col>
         <v-col cols="12" md="3" class="py-5">
-          <v-card class="mx-auto" elevation="15">
+          <v-card class="mx-auto" elevation="15" v-scrollanimation="500">
             <v-card-text>
               <div>Total</div>
               <p class="display-1 text--primary" v-if="!promo">
@@ -87,7 +87,7 @@
               </div>
             </v-card-text>
           </v-card>
-          <v-card class="mx-auto my-10" elevation="15">
+          <v-card class="mx-auto my-10" elevation="15" v-scrollanimation="800">
             <v-img src="../assets/student-discount.jpg" height="200px"></v-img>
 
             <v-card-title> Consigue descuentos!</v-card-title>
@@ -199,12 +199,21 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .spanned {
   width: 30px;
   text-align: center;
 }
 .w-100 {
   width: 100%;
+}
+.before-enter{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s;
+}
+.enter{
+  opacity: 1;
+  transform: translate(0px);
 }
 </style>

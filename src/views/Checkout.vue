@@ -1,7 +1,7 @@
 <template>
   <div class="checkout">
     <v-container>
-      <v-card elevation="15" class="mx-5 py-5">
+      <v-card elevation="15" class="mx-5 py-5" v-scrollanimation>
         <v-card-title class="d-flex flex-row align-center justify-center">
           <v-icon class="mx-3">mdi-clipboard-check-outline</v-icon>
           <h2>Checkout</h2>
@@ -100,7 +100,7 @@
           </v-col>
 
           <v-col cols="12" md="6">
-            <v-card class="mx-auto my-10" color="primary" dark max-width="400">
+            <v-card class="mx-auto my-10" color="primary" dark max-width="400" v-scrollanimation="500">
               <v-card-title>
                 <v-icon large left> mdi-cash </v-icon>
                 <span class="title font-weight-light"
@@ -206,4 +206,14 @@ export default {
 </script>
 
 <style scoped>
+
+.before-enter{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s;
+}
+.enter{
+  opacity: 1;
+  transform: translate(0px);
+}
 </style>

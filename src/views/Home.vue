@@ -2,17 +2,16 @@
   <div class="home">
     <v-container fluid class="px-0 py-0">
       <v-row> </v-row>
-      <v-parallax 
-        
+      <v-parallax         
         height="500"
         class="px-0 py-0 mx-0 elevation-15"
         dark
         src="https://picsum.photos/1000/1000?random"
       >
         <v-overlay value="true" color="primary"  opacity="0.8"  absolute class="mx-0 px-0 text-center">
-          <h1 class="text-h2 text-bold font-weight-medium ">Compra y vende teléfonos aqui!</h1>
-          <h2 class="text-h4">La mejor tienda de celulares.</h2>
-          <v-btn class="my-5 black--text" to="/terms" color="secondary">
+          <h1 class="text-h2 text-bold font-weight-medium " v-scrollanimation >Compra y vende teléfonos aquí!</h1>
+          <h2 class="text-h4" v-scrollanimation="500" >La mejor tienda de celulares.</h2>
+          <v-btn class="my-5 black--text" to="/terms" color="secondary" v-scrollanimation="1000">
             Aprende más
           </v-btn>
         </v-overlay>
@@ -139,14 +138,14 @@
             <template v-slot:default="props">
               <v-row>
                 <v-col
-                  v-for="item in props.items"
-                  :key="item.name"
+                  v-for="(item,index) in props.items"
+                  :key="index"
                   cols="12"
                   sm="6"
                   md="4"
                   
                 >
-                  <v-card  class="mx-auto my-3" elevation="8">
+                  <v-card v-scrollanimation="200" :data-mult="index" class="mx-auto my-3" elevation="8">
                     <v-img
                       height="250"
                       :src="
@@ -447,5 +446,15 @@ export default {
 } */
 .action-button {
   margin: 5px;
+}
+
+.before-enter{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s;
+}
+.enter{
+  opacity: 1;
+  transform: translate(0px);
 }
 </style>

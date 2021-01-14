@@ -8,7 +8,7 @@
     <v-container v-if="loaded">
       <v-card elevation="20" class="my-5">
         <v-row>
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="6" v-scrollanimation>
             <v-container fluid>
 
             <v-carousel class="mx-md-5 my-5 elevation-8">
@@ -36,7 +36,7 @@
             </v-carousel>
             </v-container>
           </v-col>
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="6" v-scrollanimation="500">
             <div class="mx-5 my-5">
               <div class="d-flex flex-row justify-left align-center">
                 <h1>
@@ -259,5 +259,14 @@ export default {
   align-items: center;
   justify-content: center;
   /* background-color: red; */
+}
+.before-enter{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s;
+}
+.enter{
+  opacity: 1;
+  transform: translate(0px);
 }
 </style>

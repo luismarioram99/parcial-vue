@@ -1,11 +1,16 @@
 <template>
-  <div>
-    <v-container class="my-5">
+  <div class="estadisticas">
+    <div v-if="!ready" fluid class="loading-pre">
+      <v-progress-circular indeterminate color="primary">
+
+      </v-progress-circular>
+    </div>
+    <v-container class="my-5" v-if="ready">
       <h2 class="mb-5">Estadisticas</h2>
 
       <v-row>
         <v-col col="12" md="6">
-          <v-card elevation="15">
+          <v-card elevation="15" v-scrollanimation>
             <v-card-title> Marcas publicadas </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
@@ -20,7 +25,7 @@
           </v-card>
         </v-col>
         <v-col col="12" md="6">
-          <v-card elevation="15">
+          <v-card elevation="15" v-scrollanimation>
             <v-card-title> Marcas Compradas </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
@@ -35,7 +40,7 @@
           </v-card>
         </v-col>
         <v-col col="12" md="6">
-          <v-card elevation="15">
+          <v-card elevation="15" v-scrollanimation>
             <v-card-title> Ventas, Descuentos y Ganancias </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
@@ -50,7 +55,7 @@
           </v-card>
         </v-col>
          <v-col col="12" md="6">
-          <v-card elevation="15">
+          <v-card elevation="15" v-scrollanimation>
             <v-card-title> Datos acumulados </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
@@ -302,4 +307,23 @@ export default {
 </script>
 
 <style scoped>
+.before-enter{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s;
+}
+.enter{
+  opacity: 1;
+  transform: translate(0px);
+}
+.loading-pre{
+  height: 100% !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.estadisticas{
+  height: 100%;
+}
 </style>
