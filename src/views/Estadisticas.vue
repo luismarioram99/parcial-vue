@@ -162,7 +162,7 @@ export default {
 
       ventas.forEach((venta) => {
         venta.carrito.forEach((item) => {
-          countMap[item.marca]++;
+          countMap[item.marca]+= item.cantidad;
         });
       });
 

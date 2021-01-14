@@ -1,10 +1,27 @@
 <template>
   <div class="home">
-    
+    <v-container fluid class="px-0 py-0">
+      <v-row> </v-row>
+      <v-parallax 
+        
+        height="500"
+        class="px-0 py-0 mx-0 elevation-15"
+        dark
+        src="https://picsum.photos/1000/1000?random"
+      >
+        <v-overlay value="true" color="primary"  opacity="0.8"  absolute class="mx-0 px-0 text-center">
+          <h1 class="text-h2 text-bold font-weight-medium ">Compra y vende teléfonos aqui!</h1>
+          <h2 class="text-h4">La mejor tienda de celulares.</h2>
+          <v-btn class="my-5 black--text" to="/terms" color="secondary">
+            Aprende más
+          </v-btn>
+        </v-overlay>
+      </v-parallax>
+    </v-container>
+
     <v-container fluid>
       <v-row>
         <v-col cols="12" md="3" class="relative hidden-sm-and-down px5 pt-6">
-          
           <div class="filter-container">
             <div class="d-flex flex-row justify-center align-center">
               <v-icon class="my-3">mdi-filter</v-icon>
@@ -127,11 +144,16 @@
                   cols="12"
                   sm="6"
                   md="4"
+                  
                 >
-                  <v-card class="mx-auto my-3" elevation="8">
+                  <v-card  class="mx-auto my-3" elevation="8">
                     <v-img
                       height="250"
-                      :src="item.imagenes.length>0?item.imagenes[0].url:'../assets/logo.svg'"
+                      :src="
+                        item.imagenes.length > 0
+                          ? item.imagenes[0].url
+                          : '../assets/logo.svg'
+                      "
                       lazy-src="../assets/placeholder.png"
                     >
                       <template v-slot:placeholder>
@@ -194,9 +216,15 @@
                         active-class="deep-purple accent-4 white--text"
                         column
                       >
-                        <v-chip @click="filtrarPor(item.marca)">{{ item.marca }}</v-chip>
-                        <v-chip @click="filtrarPor(item.modelo)">{{ item.modelo }}</v-chip>
-                        <v-chip @click="filtrarPor(item.sistema)">{{ item.sistema }}</v-chip>
+                        <v-chip @click="filtrarPor(item.marca)">{{
+                          item.marca
+                        }}</v-chip>
+                        <v-chip @click="filtrarPor(item.modelo)">{{
+                          item.modelo
+                        }}</v-chip>
+                        <v-chip @click="filtrarPor(item.sistema)">{{
+                          item.sistema
+                        }}</v-chip>
                       </v-chip-group>
                     </v-card-text>
 
@@ -317,11 +345,9 @@
     </v-dialog>
   </div>
 </template>
-        
 
 <script>
 import { db } from "../firebase";
-
 export default {
   name: "Home",
   components: {
@@ -384,8 +410,8 @@ export default {
     anuncios: db.collection("anuncios"),
   },
   methods: {
-    filtrarPor(param){
-      if(this.busqueda == param) this.busqueda = "";
+    filtrarPor(param) {
+      if (this.busqueda == param) this.busqueda = "";
       else this.busqueda = param;
     },
     comprar(anuncio) {
@@ -413,15 +439,12 @@ export default {
 .w-100 {
   width: 100%;
 }
-.filter-container {
-  position: relative;
-}
 .relative {
   position: relative;
 }
-.filter-container {
+/* .filter-container {
   position: fixed;
-}
+} */
 .action-button {
   margin: 5px;
 }
