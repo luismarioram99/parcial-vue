@@ -389,7 +389,7 @@ export default {
       ordenar: {},
       sortDesc: true,
       filterDialog: false,
-      marcas: ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo"],
+      marcas: ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo", "Otro"],
       estados: [
         "Sellado",
         "Nuevo",
