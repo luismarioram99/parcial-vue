@@ -7,7 +7,7 @@
         :src="require('../assets/gifs/' + gifURL)"
       >
         <div class="centered-text">
-          <h1 class="text-h1 font-weight-medium">
+          <h1 class=" font-weight-medium">
             404 no encontrado
           </h1>
         </div>
