@@ -327,3 +327,15 @@ export default {
   height: 100%;
 }
 </style>
+
+<style>
+.before-enter{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s;
+}
+.enter{
+  opacity: 1;
+  transform: translate(0px);
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="h-100 d-flex flex-row justify-center align-center" >
     <v-container>
-      <v-card elevation="15">
+      <v-card elevation="15" v-scrollanimation>
         <v-card-title>
           <h2>Terminos y condiciones</h2>
         </v-card-title>
