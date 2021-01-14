@@ -346,7 +346,7 @@ export default {
       subidas: [],
 
       maxTel: 8,
-      marcas: ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo"],
+      marcas: ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo", "Otro"],
       estados: [
         "Sellado",
         "Nuevo",

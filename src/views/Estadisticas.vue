@@ -128,7 +128,7 @@ export default {
           });
         });
 
-      var marcas = ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo"];
+      var marcas = ["Samsung", "Apple", "Huawei", "LG", "Xiaomi", "Oppo", "Otro"];
       var countMap = {};
       marcas.forEach((marca) => {
         countMap[marca] = 0;
