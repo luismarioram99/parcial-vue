@@ -15,6 +15,12 @@
           absolute
           class="mx-0 px-0 text-center"
         >
+          <div v-if="loading">
+              <v-progress-circular indeterminate color="secondary">
+
+              </v-progress-circular>
+          </div>
+
           <div v-if="!loading">
 
           <h1 class="text-h2 text-bold font-weight-medium" v-scrollanimation>
