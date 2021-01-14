@@ -120,7 +120,7 @@
             v-if="anuncios.length"
             :items="anunciosFiltrado"
             :search="busqueda"
-            :sort-by="ordenar.param"
+            :sort-by="ordenar"
             :items-per-page="10"
             :sort-desc="sortDesc"
           >
@@ -144,6 +144,7 @@
                     hide-details
                     :items="params"
                     item-text="texto"
+                    item-value="param"
                     prepend-inner-icon="mdi-magnify"
                     label="Ordenar por"
                   ></v-select>
@@ -160,6 +161,7 @@
               </v-toolbar>
             </template>
             <template v-slot:default="props">
+              
               <v-row>
                 <v-col
                   v-for="(item, index) in props.items"
