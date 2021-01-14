@@ -2,16 +2,31 @@
   <div class="home">
     <v-container fluid class="px-0 py-0">
       <v-row> </v-row>
-      <v-parallax         
+      <v-parallax
         height="500"
         class="px-0 py-0 mx-0 elevation-15"
         dark
-        src="https://picsum.photos/1000/1000?random"
+        :src="require('../assets/backgrounds/' + imageDir)"
       >
-        <v-overlay value="true" color="primary"  opacity="0.8"  absolute class="mx-0 px-0 text-center">
-          <h1 class="text-h2 text-bold font-weight-medium " v-scrollanimation >Compra y vende teléfonos aquí!</h1>
-          <h2 class="text-h4" v-scrollanimation="500" >La mejor tienda de celulares.</h2>
-          <v-btn class="my-5 black--text" to="/terms" color="secondary" v-scrollanimation="1000">
+        <v-overlay
+          value="true"
+          color="primary"
+          opacity="0.8"
+          absolute
+          class="mx-0 px-0 text-center"
+        >
+          <h1 class="text-h2 text-bold font-weight-medium" v-scrollanimation>
+            Compra y vende teléfonos aquí!
+          </h1>
+          <h2 class="text-h4" v-scrollanimation="500">
+            La mejor tienda de celulares.
+          </h2>
+          <v-btn
+            class="my-5 black--text"
+            to="/terms"
+            color="secondary"
+            v-scrollanimation="1000"
+          >
             Aprende más
           </v-btn>
         </v-overlay>
@@ -138,14 +153,18 @@
             <template v-slot:default="props">
               <v-row>
                 <v-col
-                  v-for="(item,index) in props.items"
+                  v-for="(item, index) in props.items"
                   :key="index"
                   cols="12"
                   sm="6"
                   md="4"
-                  
                 >
-                  <v-card v-scrollanimation="200" :data-mult="index%3" class="mx-auto my-3" elevation="8">
+                  <v-card
+                    v-scrollanimation="200"
+                    :data-mult="index % 3"
+                    class="mx-auto my-3"
+                    elevation="8"
+                  >
                     <v-img
                       height="250"
                       :src="
@@ -354,6 +373,7 @@ export default {
   },
   data() {
     return {
+      imageDir: "",
       busqueda: "",
       ordenar: {},
       sortDesc: true,
@@ -409,6 +429,9 @@ export default {
     anuncios: db.collection("anuncios"),
   },
   methods: {
+    getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    },
     filtrarPor(param) {
       if (this.busqueda == param) this.busqueda = "";
       else this.busqueda = param;
@@ -416,6 +439,9 @@ export default {
     comprar(anuncio) {
       this.$root.$emit("Added-to-cart", anuncio);
     },
+  },
+  created() {
+    this.imageDir = "image" + this.getRandomInt(1, 15) + ".jpg";
   },
 };
 </script>
@@ -448,12 +474,12 @@ export default {
   margin: 5px;
 }
 
-.before-enter{
+.before-enter {
   opacity: 0;
   transform: translateY(30px);
   transition: all 1s;
 }
-.enter{
+.enter {
   opacity: 1;
   transform: translate(0px);
 }

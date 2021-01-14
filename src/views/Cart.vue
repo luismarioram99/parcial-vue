@@ -97,7 +97,7 @@
             </v-card-subtitle>
 
             <v-card-actions>
-              <v-btn color="primary lighten-1" text>Aprende más!</v-btn>
+              <v-btn color="primary lighten-1" to="/terms" text>Aprende más!</v-btn>
 
               <v-spacer></v-spacer>
 
