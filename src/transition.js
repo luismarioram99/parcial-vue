@@ -2,7 +2,7 @@
 const animatedScrollObserver = delay => new IntersectionObserver(
   (entries, animatedScrollObserver) => {
     entries.forEach((entry) => {
-      console.log(delay);
+      
       if (entry.isIntersecting) {
         setTimeout(() => {
           entry.target.classList.add('enter');
@@ -19,7 +19,6 @@ export default {
     var multiplier = el.dataset.mult;
     var delay = binding.expression;
 
-    console.log(multiplier);
 
     if (!multiplier) multiplier = 1;
     if (!delay) delay = 0;
