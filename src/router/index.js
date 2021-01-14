@@ -7,6 +7,7 @@ import Checkout from '../views/Checkout.vue'
 import Done from '../views/Done.vue'
 import Terms from '../views/Terms.vue'
 import Estadisticas from '../views/Estadisticas.vue'
+import NotFound from '../views/404.vue';
 Vue.use(VueRouter)
 
 const routes = [
@@ -41,7 +42,12 @@ const routes = [
     path: '/stats',
     name: 'Estadisticas',
     component: Estadisticas
+  }, {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
   }
+
 ]
 
 const router = new VueRouter({

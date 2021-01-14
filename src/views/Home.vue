@@ -145,7 +145,7 @@
                   md="4"
                   
                 >
-                  <v-card v-scrollanimation="200" :data-mult="index" class="mx-auto my-3" elevation="8">
+                  <v-card v-scrollanimation="200" :data-mult="index%3" class="mx-auto my-3" elevation="8">
                     <v-img
                       height="250"
                       :src="
